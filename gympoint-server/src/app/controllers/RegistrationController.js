@@ -1,10 +1,12 @@
 import { parseISO, isBefore, addMonths } from 'date-fns';
-
 import Student from '../models/Student';
 import Plan from '../models/Plan';
 import Registration from '../models/Registration';
 
 import { storeSchema } from '../validations/Registration';
+
+import WelcomeMail from '../jobs/WelcomeMail';
+import Queue from '../../lib/Queue';
 
 class RegistrationController {
   async store(req, res) {
@@ -31,6 +33,11 @@ class RegistrationController {
       return res.status(400).json({ error: 'Aluno não encontrado' });
     }
 
+    const checkStudent = await Registration.findOne({ where: { student_id } });
+    if (checkStudent) {
+      return res.status(400).json({ error: 'Aluno já possui uma matrícula' });
+    }
+
     const plan = await Plan.findByPk(plan_id);
     if (!plan) {
       return res.status(400).json({ error: 'Plano não encontrado' });
@@ -42,6 +49,15 @@ class RegistrationController {
     const registration = await Registration.create({
       ...req.body,
       end_date: endDate,
+      price: TotalPrice,
+    });
+
+    await Queue.add(WelcomeMail.key, {
+      studentName: student.name,
+      studentEmail: student.email,
+      startDate: start_date,
+      endDate,
+      plan: plan.title,
       price: TotalPrice,
     });
 
