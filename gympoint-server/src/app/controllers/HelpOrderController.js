@@ -34,7 +34,7 @@ class HelpOrderController {
     const { idStudent } = req.params;
     const { page = 1 } = req.query;
 
-    const student = await Student.findByPk(idStudent);
+    const student = await Student.finddByPk(idStudent);
     if (!student) {
       return res.status(400).json({ error: 'Aluno não cadastrado' });
     }
