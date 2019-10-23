@@ -11,10 +11,6 @@ class StudentController {
       return res.status(400).json({ error: 'Falha na validação dos campos' });
     }
 
-    if (!req.userId) {
-      return res.status(401).json({ error: 'Usuário não autorizado' });
-    }
-
     const checkStudent = await Student.findOne({
       where: { email: req.body.email },
     });
@@ -44,15 +40,11 @@ class StudentController {
       return res.status(400).json({ error: 'Falha na validação dos campos' });
     }
 
-    if (!req.userId) {
-      return res.status(401).json({ error: 'Usuário não autorizado' });
-    }
-
     const { id } = req.params;
 
     const student = await Student.findByPk(id);
     if (!student) {
-      return res.status(400).json({ error: 'Aluno não encontrado' });
+      return res.status(400).json({ error: 'Aluno não cadastrado' });
     }
 
     const { name, email, age, height, weight } = await student.update(req.body);
@@ -66,9 +58,6 @@ class StudentController {
   }
 
   async index(req, res) {
-    if (!req.userId) {
-      return res.status(401).json({ error: 'Usuário não autorizado' });
-    }
     const students = await Student.findAll({
       attributes: ['name', 'email', 'age', 'weight', 'height'],
       include: [

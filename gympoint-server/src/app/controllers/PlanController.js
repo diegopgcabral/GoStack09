@@ -4,10 +4,6 @@ import { storeSchema, updateSchema } from '../validations/Plan';
 
 class PlanController {
   async index(req, res) {
-    if (!req.userId) {
-      return res.status(400).json({ error: 'Usuário não autorizado' });
-    }
-
     const plans = await Plan.findAll({
       attributes: ['id', 'title', 'duration', 'price'],
     });
@@ -19,10 +15,6 @@ class PlanController {
       await storeSchema.validate(req.body);
     } catch (err) {
       return res.status(400).json({ error: 'Falha na validação dos campos' });
-    }
-
-    if (!req.userId) {
-      return res.status(400).json({ error: 'Usuário não autorizado' });
     }
 
     const checkPlan = await Plan.findOne({ where: { title: req.body.title } });
@@ -47,10 +39,6 @@ class PlanController {
       return res.status(400).json({ error: 'Falha na validação dos campos' });
     }
 
-    if (!req.userId) {
-      return res.status(401).json({ error: 'Usuário não autorizado' });
-    }
-
     const { id } = req.params;
 
     const plan = await Plan.findByPk(id);
@@ -63,10 +51,6 @@ class PlanController {
   }
 
   async delete(req, res) {
-    if (!req.userId) {
-      return res.status(401).json({ error: 'Usuário não autorizado' });
-    }
-
     const { id } = req.params;
 
     const plan = await Plan.findByPk(id);
