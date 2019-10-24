@@ -4,17 +4,10 @@ import Student from '../models/Student';
 import Queue from '../../lib/Queue';
 import AnswerMail from '../jobs/AnswerMail';
 
-import { storeSchema, updateSchema } from '../validations/HelpOrder';
-
 class HelpOrderController {
   async store(req, res) {
-    try {
-      await storeSchema.validate(req.body);
-    } catch (err) {
-      return res.status(400).json({ error: 'Falha na validação dos campos' });
-    }
-
     const { idStudent } = req.params;
+
     const student = await Student.findByPk(idStudent);
     if (!student) {
       return res.status(400).json({ error: 'Aluno não cadastrado' });
@@ -34,7 +27,7 @@ class HelpOrderController {
     const { idStudent } = req.params;
     const { page = 1 } = req.query;
 
-    const student = await Student.finddByPk(idStudent);
+    const student = await Student.findByPk(idStudent);
     if (!student) {
       return res.status(400).json({ error: 'Aluno não cadastrado' });
     }
@@ -51,16 +44,10 @@ class HelpOrderController {
   }
 
   async update(req, res) {
-    try {
-      await updateSchema.validate(req.body);
-    } catch (err) {
-      return res.status(400).json({ error: 'Falha na validação dos campos' });
-    }
-
-    const { id } = req.params;
+    const { idHelpOrder } = req.params;
     const { answer } = req.body;
 
-    const helpOrder = await HelpOrder.findByPk(id, {
+    const helpOrder = await HelpOrder.findByPk(idHelpOrder, {
       attributes: ['id', 'student_id', 'question', 'answer', 'answer_at'],
       include: [
         {

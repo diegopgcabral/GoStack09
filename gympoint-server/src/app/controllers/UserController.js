@@ -1,14 +1,7 @@
 import User from '../models/User';
 
-import { storeSchema, updateSchema } from '../validations/User';
-
 class UserController {
   async store(req, res) {
-    try {
-      await storeSchema.validate(req.body);
-    } catch (err) {
-      return res.status(400).json({ error: 'Falha na validações dos campos' });
-    }
     const userExists = await User.findOne({ where: { email: req.body.email } });
 
     if (userExists) {
@@ -24,12 +17,6 @@ class UserController {
   }
 
   async update(req, res) {
-    try {
-      await updateSchema.validate(req.body);
-    } catch (err) {
-      return res.status(400).json({ error: 'Falha na validação dos campos' });
-    }
-
     const { email, oldPassword } = req.body;
 
     const user = await User.findByPk(req.userId);

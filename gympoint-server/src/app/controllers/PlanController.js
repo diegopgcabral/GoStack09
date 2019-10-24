@@ -1,47 +1,28 @@
 import Plan from '../models/Plan';
 
-import { storeSchema, updateSchema } from '../validations/Plan';
-
 class PlanController {
   async index(req, res) {
     const plans = await Plan.findAll({
-      attributes: ['id', 'title', 'duration', 'price'],
+      attributes: ['idPlan', 'title', 'duration', 'price'],
     });
     return res.json(plans);
   }
 
   async store(req, res) {
-    try {
-      await storeSchema.validate(req.body);
-    } catch (err) {
-      return res.status(400).json({ error: 'Falha na validação dos campos' });
-    }
-
     const checkPlan = await Plan.findOne({ where: { title: req.body.title } });
     if (checkPlan) {
       return res.status(400).json({ error: 'Plano já cadastrado' });
     }
 
-    const { id, title, duration, price } = await Plan.create(req.body);
+    const plan = await Plan.create(req.body);
 
-    return res.json({
-      id,
-      title,
-      duration,
-      price,
-    });
+    return res.json(plan);
   }
 
   async update(req, res) {
-    try {
-      await updateSchema.validate(req.body);
-    } catch (err) {
-      return res.status(400).json({ error: 'Falha na validação dos campos' });
-    }
+    const { idPlan } = req.params;
 
-    const { id } = req.params;
-
-    const plan = await Plan.findByPk(id);
+    const plan = await Plan.findByPk(idPlan);
     if (!plan) {
       return res.status(400).json({ error: 'Plano não cadastrado' });
     }
@@ -51,9 +32,9 @@ class PlanController {
   }
 
   async delete(req, res) {
-    const { id } = req.params;
+    const { idPlan } = req.params;
 
-    const plan = await Plan.findByPk(id);
+    const plan = await Plan.findByPk(idPlan);
     if (!plan) {
       return res.status(400).json({ error: 'Plano não cadastrado' });
     }

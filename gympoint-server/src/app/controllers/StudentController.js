@@ -1,16 +1,8 @@
 import Student from '../models/Student';
 import File from '../models/File';
 
-import { storeSchema, updateSchema } from '../validations/Student';
-
 class StudentController {
   async store(req, res) {
-    try {
-      await storeSchema.validate(req.body);
-    } catch (err) {
-      return res.status(400).json({ error: 'Falha na validação dos campos' });
-    }
-
     const checkStudent = await Student.findOne({
       where: { email: req.body.email },
     });
@@ -19,30 +11,15 @@ class StudentController {
       return res.status(400).json({ error: 'E-mail já cadastrado' });
     }
 
-    const { id, name, email, age, height, weight } = await Student.create(
-      req.body
-    );
+    const student = await Student.create(req.body);
 
-    return res.json({
-      id,
-      name,
-      email,
-      age,
-      height,
-      weight,
-    });
+    return res.json(student);
   }
 
   async update(req, res) {
-    try {
-      await updateSchema.validate(req.body);
-    } catch (err) {
-      return res.status(400).json({ error: 'Falha na validação dos campos' });
-    }
+    const { idStudent } = req.params;
 
-    const { id } = req.params;
-
-    const student = await Student.findByPk(id);
+    const student = await Student.findByPk(idStudent);
     if (!student) {
       return res.status(400).json({ error: 'Aluno não cadastrado' });
     }
@@ -59,7 +36,7 @@ class StudentController {
 
   async index(req, res) {
     const students = await Student.findAll({
-      attributes: ['name', 'email', 'age', 'weight', 'height'],
+      attributes: ['id', 'name', 'email', 'age', 'weight', 'height'],
       include: [
         {
           model: File,
@@ -68,6 +45,7 @@ class StudentController {
         },
       ],
     });
+
     return res.json(students);
   }
 }
