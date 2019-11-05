@@ -19,8 +19,12 @@ class RegistrationController {
   }
 
   async index(req, res) {
+    const { page = 1 } = req.query;
+
     const registration = await Registration.findAll({
       attributes: ['id', 'start_date', 'end_date', 'price'],
+      limit: 20,
+      offset: (page - 1) * 20,
       include: [
         {
           model: Student,

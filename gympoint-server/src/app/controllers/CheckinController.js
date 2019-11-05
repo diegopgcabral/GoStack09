@@ -35,6 +35,7 @@ class CkeckinController {
 
   async index(req, res) {
     const { idStudent } = req.params;
+    const { page = 1 } = req.query;
 
     const checkStudent = await Student.findByPk(idStudent);
     if (!checkStudent) {
@@ -44,6 +45,8 @@ class CkeckinController {
     const checkins = await Checkin.findAll({
       where: { student_id: idStudent },
       attributes: ['student_id', 'createdAt'],
+      limit: 20,
+      offset: (page - 1) * 20,
       include: [
         {
           model: Student,
