@@ -56,6 +56,7 @@ routes.put(
   StudentController.update
 );
 routes.get('/students', StudentController.index);
+routes.delete('/students/:idStudent', StudentController.delete);
 
 routes.get('/plans', PlanController.index);
 routes.post('/plans', validatePlanStore, PlanController.store);

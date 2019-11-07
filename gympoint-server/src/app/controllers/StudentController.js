@@ -51,6 +51,18 @@ class StudentController {
 
     return res.json(students);
   }
+
+  async delete(req, res) {
+    const { idStudent } = req.params;
+
+    const student = await Student.findByPk(idStudent);
+    if (!student) {
+      return res.status(400).json({ error: 'Aluno não cadastrado' });
+    }
+
+    await student.destroy();
+    return res.send();
+  }
 }
 
 export default new StudentController();
