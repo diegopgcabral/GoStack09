@@ -1,5 +1,5 @@
+import { Op } from 'sequelize';
 import Student from '../models/Student';
-import File from '../models/File';
 
 class StudentController {
   async store(req, res) {
@@ -35,19 +35,18 @@ class StudentController {
   }
 
   async index(req, res) {
-    const { page = 1 } = req.query;
+    const { page = 1, name = '' } = req.query;
 
     const students = await Student.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${name}%`,
+        },
+      },
       attributes: ['id', 'name', 'email', 'age', 'weight', 'height'],
       limit: 20,
       offset: (page - 1) * 20,
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-          attributes: ['id', 'name', 'path', 'url'],
-        },
-      ],
+      order: ['name'],
     });
 
     return res.json(students);
