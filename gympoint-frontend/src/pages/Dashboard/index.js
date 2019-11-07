@@ -1,7 +1,15 @@
 import React from 'react';
 
-// import { Container } from './styles';
+import logo from '~/assets/logo.png';
+
+import { Container } from './styles';
 
 export default function Dashboard() {
-  return <h1>DASHBOARD</h1>;
+  return (
+    <>
+      <Container>
+        <img src={logo} alt="GymPoint" />
+      </Container>
+    </>
+  );
 }

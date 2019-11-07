@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Wrapper = styled.div`
-  height: 100%;
+  height: 100vh;
   background: #ee4d64;
   display: flex;
   justify-content: center;
@@ -20,9 +20,12 @@ export const Content = styled.div`
 
   img {
     margin-top: 50px;
+    width: 150px;
+    height: 100px;
   }
 
   form {
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin-top: 30px;
@@ -43,30 +46,28 @@ export const Content = styled.div`
       height: 45px;
       width: 300px;
       font-size: 16px;
+      padding: 0 10px;
       margin: 0 30px 20px 30px;
     }
 
     span {
       color: #ee4d64;
-      align-self: flex-end;
-      margin-top: -0.5rem;
-      margin-bottom: 0.75rem;
-      padding: 0.1rem 0.25rem;
-      border-radius: 0 0 0.25rem 0.25rem;
-      font-size: 0.75rem;
+      font-size: 12px;
       font-weight: bold;
     }
 
     button {
-      margin: 0 0 0.75rem;
-      height: 45px;
       width: 300px;
+      margin: 0 auto;
+      height: 45px;
+      border-radius: 4px;
+      display: block;
       background: #ee4d64;
       font-weight: bold;
       color: #ffffff;
       border: 0;
-      border-radius: 4px;
       font-size: 16px;
+      margin-top: 10px;
       transition: background 0.2s;
 
       &:hover {
