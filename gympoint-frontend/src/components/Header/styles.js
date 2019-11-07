@@ -30,6 +30,7 @@ export const Content = styled.div`
       font-size: 15px;
       color: #999999;
       display: flex;
+      padding: 20px;
     }
   }
 
@@ -59,6 +60,8 @@ export const Profile = styled.div`
       margin-top: 2px;
       font-size: 12px;
       color: #de3b3b;
+      border: 0;
+      background: #fff;
     }
   }
 `;
