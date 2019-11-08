@@ -6,10 +6,8 @@ import { Container } from './styles';
 
 export default function Dashboard() {
   return (
-    <>
-      <Container>
-        <img src={logo} alt="GymPoint" />
-      </Container>
-    </>
+    <Container>
+      <img src={logo} alt="GymPoint" />
+    </Container>
   );
 }

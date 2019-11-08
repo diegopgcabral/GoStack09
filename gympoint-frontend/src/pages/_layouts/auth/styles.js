@@ -34,6 +34,7 @@ export const Content = styled.div`
       font-weight: bold;
       font-size: 14px;
       line-height: 16px;
+      color: #444444;
       text-align: left;
       margin: 0 0 8px 30px;
     }
@@ -41,6 +42,7 @@ export const Content = styled.div`
     input {
       background: #ffffff;
       border: 1px solid #dddddd;
+      color: #999999;
       box-sizing: border-box;
       border-radius: 4px;
       height: 45px;
@@ -71,7 +73,7 @@ export const Content = styled.div`
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.03, '#ee4d64')};
+        background: ${darken(0.05, '#ee4d64')};
       }
     }
   }

@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-   text-align: center;
+  max-width: 1200px;
+  margin: 50px auto;
 
-  img {
-    margin-top: 50px;
-    width: 150px;
-    height: 100px;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 `;
