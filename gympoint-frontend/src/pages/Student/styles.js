@@ -3,20 +3,18 @@ import { darken } from 'polished';
 
 export const Container = styled.div`
   width: 1200px;
-  height: 900px;
   margin: 0 auto;
   margin-top: 30px;
 
   header {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
 
     h1 {
       font-size: 24px;
       font-weight: bold;
       color: #444444;
-      margin-left: 120px;
-      margin-right: 120px;
       display: flex;
       align-items: center;
     }
@@ -69,9 +67,6 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   margin-top: 24px;
-  margin-left: 120px;
-  height: 542px;
-  max-height: 542px;
   border-radius: 4px;
   background-color: #ffffff;
 
@@ -79,7 +74,6 @@ export const Content = styled.div`
     width: 100%;
     text-align: left;
     padding: 30px;
-    border: 1px solid #dddddd;
 
     thead {
       font-size: 16px;
@@ -114,6 +108,11 @@ export const Content = styled.div`
 
           &:last-child {
             text-align: right;
+          }
+        }
+        &:last-child {
+          td {
+            border-bottom: 0;
           }
         }
       }

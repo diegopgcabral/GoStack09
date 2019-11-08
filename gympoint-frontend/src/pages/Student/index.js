@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { Container, Content } from './styles';
 
 import api from '~/services/api';
-import history from '~/services/history';
 
 export default function Student() {
   const [searchStudent, setSearchStudent] = useState();
@@ -31,7 +30,6 @@ export default function Student() {
       try {
         await api.delete(`students/${id}`);
         toast.success('Aluno excluido com sucesso!');
-        history.push('/students');
       } catch (err) {
         toast.error('Não foi possível excluir o aluno!');
       }
