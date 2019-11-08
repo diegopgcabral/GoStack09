@@ -26,7 +26,7 @@ const schema = Yup.object().shape({
 });
 
 export default function NewStudent() {
-  async function handleAdd({ name, email, age, height, weight }) {
+  async function handleSubmit({ name, email, age, height, weight }) {
     try {
       await api.post('students', {
         name,
@@ -61,7 +61,7 @@ export default function NewStudent() {
         </aside>
       </header>
       <Content>
-        <Form schema={schema} onSubmit={handleAdd}>
+        <Form schema={schema} onSubmit={handleSubmit}>
           <div>
             <h3>NOME COMPLETO</h3>
             <Input name="name" type="text" autoComplete="off" />
