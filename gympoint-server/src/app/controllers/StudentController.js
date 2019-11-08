@@ -40,7 +40,7 @@ class StudentController {
     const students = await Student.findAll({
       where: {
         name: {
-          [Op.like]: `%${name}%`,
+          [Op.iLike]: `${name}%`,
         },
       },
       attributes: ['id', 'name', 'email', 'age', 'weight', 'height'],
@@ -62,6 +62,16 @@ class StudentController {
 
     await student.destroy();
     return res.send();
+  }
+
+  async show(req, res) {
+    const students = await Student.findByPk(req.params.idStudent);
+
+    if (!students) {
+      return res.status(400).json({ error: 'Aluno não cadastrado' });
+    }
+
+    return res.json(students);
   }
 }
 
