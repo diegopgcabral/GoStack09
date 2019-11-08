@@ -6,7 +6,7 @@ import SignIn from '~/pages/SignIn';
 
 import Dashboard from '~/pages/Dashboard';
 import Student from '~/pages/Student';
-import NewStudent from '~/pages/Student/New';
+import AddStudent from '~/pages/Student/Add';
 import Plan from '~/pages/Plan';
 import Registration from '~/pages/Registration';
 import Answer from '~/pages/Answer';
@@ -17,7 +17,7 @@ export default function Routes() {
       <Route path="/" exact component={SignIn} />
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/students" component={Student} isPrivate />
-      <Route path="/newStudent" component={NewStudent} isPrivate />
+      <Route path="/student/add" component={AddStudent} isPrivate />
       <Route path="/plans" component={Plan} isPrivate />
       <Route path="/registrations" component={Registration} isPrivate />
       <Route path="/help-orders" component={Answer} isPrivate />

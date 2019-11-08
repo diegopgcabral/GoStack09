@@ -15,17 +15,23 @@ const schema = Yup.object().shape({
     .email()
     .required('E-mail é obrigatório'),
   age: Yup.number()
-    .min(1)
+    .typeError('Idade deve ser numérico')
+    .min(1, 'Idade deve ser maior ou igual a 1 ano')
+    .max(120, 'Idade dever ser menor ou igual a 120 anos')
     .required('Idade é obrigatória'),
   weight: Yup.number()
-    .min(1)
+    .typeError('Peso deve ser numérico')
+    .positive('Peso não pode ser negativo')
+    .min(1, 'Peso não pode ser menor do que 1')
     .required('Peso é obrigatório'),
   height: Yup.number()
-    .min(1)
+    .typeError('Altura deve ser numérico')
+    .positive('Altura não pode ser negativa')
+    .min(1, 'Altura não pode ser menor do que 1')
     .required('Altura é obrigatória'),
 });
 
-export default function NewStudent() {
+export default function AddStudent() {
   async function handleSubmit({ name, email, age, height, weight }) {
     try {
       await api.post('students', {
@@ -51,37 +57,62 @@ export default function NewStudent() {
         <h1>Cadastro de aluno</h1>
         <aside>
           <button className="return" type="button" onClick={handleReturn}>
-            <MdKeyboardArrowLeft color="#FFF" size={18} />
+            <MdKeyboardArrowLeft color="#FFF" size={24} />
             VOLTAR
           </button>
-          <button type="submit">
-            <MdCheck color="#FFF" size={18} />
+          <button type="submit" form="form-add-student">
+            <MdCheck color="#FFF" size={24} />
             SALVAR
           </button>
         </aside>
       </header>
       <Content>
-        <Form schema={schema} onSubmit={handleSubmit}>
+        <Form id="form-add-student" schema={schema} onSubmit={handleSubmit}>
           <div>
             <h3>NOME COMPLETO</h3>
-            <Input name="name" type="text" autoComplete="off" />
+            <Input
+              name="name"
+              type="text"
+              autoComplete="off"
+              placeholder="Digite seu nome completo"
+            />
           </div>
           <div>
             <h3>ENDEREÇO DE E-MAIL</h3>
-            <Input name="email" type="email" autoComplete="off" />
+            <Input
+              name="email"
+              type="email"
+              autoComplete="off"
+              placeholder="Digite seu endereço de e-mail"
+            />
           </div>
           <div className="last-row">
             <div>
-              <h3>IDADE</h3>
-              <Input name="age" type="text" autoComplete="off" />
+              <h3>IDADE </h3>
+              <Input
+                name="age"
+                type="text"
+                autoComplete="off"
+                placeholder="Digite sua idade"
+              />
             </div>
             <div>
               <h3>PESO (em kg)</h3>
-              <Input name="weight" type="text" autoComplete="off" />
+              <Input
+                name="weight"
+                type="text"
+                autoComplete="off"
+                placeholder="Digite seu peso"
+              />
             </div>
             <div>
               <h3>ALTURA</h3>
-              <Input name="height" type="text" autoComplete="off" />
+              <Input
+                name="height"
+                type="text"
+                autoComplete="off"
+                placeholder="Digite sua altura"
+              />
             </div>
           </div>
         </Form>

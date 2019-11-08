@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  width: 1200px;
+  width: 830px;
   margin: 0 auto;
   margin-top: 30px;
 
@@ -65,12 +65,18 @@ export const Content = styled.div`
   form {
     padding: 30px;
 
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
     > .last-row {
       display: flex;
       flex-direction: row;
 
       div {
-        margin-left: 20px;
+        margin: 0 0 0 20px;
 
         &:first-child {
           margin-left: 0;

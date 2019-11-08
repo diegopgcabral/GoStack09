@@ -41,7 +41,7 @@ export default function Student() {
       <header>
         <h1>Gerenciando alunos</h1>
         <aside>
-          <Link to="/newStudent">
+          <Link to="/student/add">
             <MdAdd color="#FFF" fontSize={18} />
             CADASTRAR
           </Link>
