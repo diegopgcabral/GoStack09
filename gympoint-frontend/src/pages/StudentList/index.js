@@ -39,7 +39,9 @@ export default function Student() {
     if (window.confirm('Deseja realmente excluir esse aluno?')) {
       try {
         await api.delete(`students/${id}`);
-        setSearchStudent('');
+        // setSearchStudent('');
+        const newList = students.filter(item => item.id !== id);
+        setStudents(newList);
         toast.success('Aluno excluido com sucesso!');
       } catch (err) {
         toast.error(`Não foi possível excluir o aluno! - Erro: ${err.message}`);

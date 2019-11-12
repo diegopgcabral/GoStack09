@@ -9,7 +9,7 @@ import api from '~/services/api';
 import { formatCurrencyBR } from '~/util/format';
 
 export default function Plan() {
-  const [plans, SetPlans] = useState([]);
+  const [plans, setPlans] = useState([]);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
@@ -27,7 +27,7 @@ export default function Plan() {
         setHasNextPage(false);
       }
 
-      SetPlans(response.data);
+      setPlans(response.data);
     }
 
     loadPlans();
@@ -37,7 +37,10 @@ export default function Plan() {
     if (window.confirm('Deseja realmente excluir esse plano?')) {
       try {
         await api.delete(`plans/${id}`);
-        // loadPlans();
+
+        const newList = plans.filter(item => item.id !== id);
+        setPlans(newList);
+
         toast.success('Plano excluido com sucesso!');
       } catch (err) {
         toast.error(

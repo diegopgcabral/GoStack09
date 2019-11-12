@@ -10,7 +10,8 @@ import StudentForm from '~/pages/StudentList/Form';
 import Plan from '~/pages/PlanList';
 import PlanFrom from '~/pages/PlanList/Form';
 import Registration from '~/pages/Registration';
-import Answer from '~/pages/Answer';
+import HelpOrder from '~/pages/HelpOrder';
+// import Answer from '~/pages/Answer';
 
 export default function Routes() {
   return (
@@ -31,7 +32,7 @@ export default function Routes() {
       <Route path="/plan/form/:idPlan" exact component={PlanFrom} isPrivate />
 
       <Route path="/registrations" component={Registration} isPrivate />
-      <Route path="/help-orders" component={Answer} isPrivate />
+      <Route path="/help-orders" component={HelpOrder} isPrivate />
 
       <Route path="/" component={() => <h1>Erro 404</h1>} />
     </Switch>
