@@ -18,16 +18,13 @@ const schema = Yup.object().shape({
   age: Yup.number()
     .typeError('Idade deve ser numérico')
     .min(1, 'Idade deve ser maior ou igual a 1 ano')
-    .max(120, 'Idade dever ser menor ou igual a 120 anos')
     .required('Idade é obrigatória'),
   weight: Yup.number()
     .typeError('Peso deve ser numérico')
-    .positive('Peso não pode ser negativo')
     .min(1, 'Peso não pode ser menor do que 1')
     .required('Peso é obrigatório'),
   height: Yup.number()
     .typeError('Altura deve ser numérico')
-    .positive('Altura não pode ser negativa')
     .min(1, 'Altura não pode ser menor do que 1')
     .required('Altura é obrigatória'),
 });
@@ -38,18 +35,36 @@ export default function FormStudent() {
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
+    async function loadStudent() {
+      const response = await api.get(`students/${idStudent}`);
+      setStudent(response.data);
+    }
+
     if (idStudent) {
       setEdit(true);
-      async function loadStudent() {
-        const response = await api.get(`students/${idStudent}`);
-        setStudent(response.data);
-      }
-
       loadStudent();
     }
   }, [idStudent]);
 
-  async function handleSubmit({ name, email, age, height, weight }) {
+  async function handleEdit({ name, email, age, height, weight }) {
+    try {
+      await api.put(`students/${idStudent}`, {
+        name,
+        email,
+        age,
+        height,
+        weight,
+      });
+      toast.success('Dados do aluno atualizado com sucesso!');
+      history.goBack();
+    } catch (err) {
+      toast.error(
+        `Não foi possível atualizar os dados do aluno! - Erro: ${err.message}`
+      );
+    }
+  }
+
+  async function handleNew({ name, email, age, height, weight }) {
     try {
       await api.post('students', {
         name,
@@ -59,7 +74,7 @@ export default function FormStudent() {
         weight,
       });
       toast.success('Aluno cadastrado com sucesso!');
-      history.push('/students');
+      history.goBack();
     } catch (err) {
       toast.error(`Não foi possível cadastrar o aluno! - Erro: ${err.message}`);
     }
@@ -84,7 +99,12 @@ export default function FormStudent() {
         </aside>
       </header>
       <Content>
-        <Form id="form-student" schema={schema} onSubmit={handleSubmit}>
+        <Form
+          id="form-student"
+          initialData={student}
+          schema={schema}
+          onSubmit={edit ? handleEdit : handleNew}
+        >
           <div>
             <h3>NOME COMPLETO</h3>
             <Input

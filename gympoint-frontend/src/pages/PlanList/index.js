@@ -3,27 +3,41 @@ import { toast } from 'react-toastify';
 import { MdAdd } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-import { Container, Content } from './styles';
+import { Container, Content, Pagination } from './styles';
 
 import api from '~/services/api';
-import { formatPrice } from '~/utils/format';
+import { formatCurrencyBR } from '~/util/format';
 
 export default function Plan() {
   const [plans, SetPlans] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
   useEffect(() => {
-    async function loadPlan() {
-      const response = await api.get('plans');
+    async function loadPlans() {
+      const response = await api.get('plans', {
+        params: {
+          page,
+        },
+      });
+
+      if (response.data.length > 0) {
+        setHasNextPage(true);
+      } else {
+        setHasNextPage(false);
+      }
+
       SetPlans(response.data);
     }
-    loadPlan();
-  }, []);
+
+    loadPlans();
+  }, [page]);
 
   async function handleDelete(id) {
     if (window.confirm('Deseja realmente excluir esse plano?')) {
       try {
         await api.delete(`plans/${id}`);
-        SetPlans('');
+        // loadPlans();
         toast.success('Plano excluido com sucesso!');
       } catch (err) {
         toast.error(
@@ -33,12 +47,16 @@ export default function Plan() {
     }
   }
 
+  function handlePagination(event) {
+    setPage(event === 'previous' ? page - 1 : page + 1);
+  }
+
   return (
     <Container>
       <header>
         <h1>Gerenciando planos</h1>
         <aside>
-          <Link to="/plans/add">
+          <Link to="/plan/form">
             <MdAdd color="#FFF" fontSize={18} />
             CADASTRAR
           </Link>
@@ -48,7 +66,7 @@ export default function Plan() {
         <table>
           <thead>
             <tr>
-              <th align="left">TÍTULO</th>
+              <th>TÍTULO</th>
               <th align="center">DURAÇÃO</th>
               <th align="center">VALOR p/ MÊS</th>
             </tr>
@@ -62,9 +80,9 @@ export default function Plan() {
                     ? `${plan.duration} meses`
                     : `${plan.duration} mês`}
                 </td>
-                <td align="center">{formatPrice(plan.price)}</td>
+                <td align="center">{formatCurrencyBR(plan.price)}</td>
                 <td>
-                  <Link to={`/plan/edit/${plan.id}`}>editar</Link>
+                  <Link to={`/plan/form/${plan.id}`}>editar</Link>
                   <button
                     className="btnDelete"
                     type="button"
@@ -78,6 +96,26 @@ export default function Plan() {
           </tbody>
         </table>
       </Content>
+
+      <Pagination>
+        <button
+          type="button"
+          onClick={() => handlePagination('previous')}
+          disabled={page < 2}
+        >
+          Anterior
+        </button>
+
+        <strong>Página {page}</strong>
+
+        <button
+          type="button"
+          disabled={!hasNextPage}
+          onClick={() => handlePagination('next')}
+        >
+          Próximo
+        </button>
+      </Pagination>
     </Container>
   );
 }

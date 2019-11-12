@@ -4,33 +4,36 @@ import { MdAdd, MdSearch } from 'react-icons/md';
 import { Input } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
 
-import { Container, Content } from './styles';
+import { Container, Content, Pagination } from './styles';
 
 import api from '~/services/api';
 
 export default function Student() {
   const [searchStudent, setSearchStudent] = useState();
   const [students, setStudents] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
   useEffect(() => {
     async function searchStudents() {
-      // const response = await api.get(`students?page=${page}&name=Diego`);
-      /**
-      const response = await api.get(
-        searchStudent ? `students?name=${searchStudent}` : 'students'
-      );
-       */
       const response = await api.get('students', {
         params: {
           name: searchStudent || '',
-          // page,
+          page,
         },
       });
+
+      if (response.data.length > 0) {
+        setHasNextPage(true);
+      } else {
+        setHasNextPage(false);
+      }
+
       setStudents(response.data);
     }
 
     searchStudents();
-  }, [searchStudent]);
+  }, [page, searchStudent]);
 
   async function handleDelete(id) {
     if (window.confirm('Deseja realmente excluir esse aluno?')) {
@@ -42,6 +45,10 @@ export default function Student() {
         toast.error(`Não foi possível excluir o aluno! - Erro: ${err.message}`);
       }
     }
+  }
+
+  function handlePagination(event) {
+    setPage(event === 'previous' ? page - 1 : page + 1);
   }
 
   return (
@@ -95,6 +102,26 @@ export default function Student() {
           </tbody>
         </table>
       </Content>
+
+      <Pagination>
+        <button
+          type="button"
+          onClick={() => handlePagination('previous')}
+          disabled={page < 2}
+        >
+          Anterior
+        </button>
+
+        <strong>Página {page}</strong>
+
+        <button
+          type="button"
+          disabled={!hasNextPage}
+          onClick={() => handlePagination('next')}
+        >
+          Próximo
+        </button>
+      </Pagination>
     </Container>
   );
 }

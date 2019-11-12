@@ -100,12 +100,21 @@ export const Content = styled.div`
       background-color: #ffffff;
       color: #999999;
       padding-left: 10px;
+
+      &:read-only {
+        background: #f5f5f5;
+
+        &:hover {
+          cursor: not-allowed;
+        }
+      }
     }
 
     span {
       font-size: 14px;
       color: #ee4d64;
       margin-top: 5px;
+      font-weight: bold;
     }
   }
 `;
