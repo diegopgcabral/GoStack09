@@ -44,8 +44,8 @@ class StudentController {
         },
       },
       attributes: ['id', 'name', 'email', 'age', 'weight', 'height'],
-      limit: 20,
-      offset: (page - 1) * 20,
+      limit: 10,
+      offset: (page - 1) * 10,
       order: ['name'],
     });
 

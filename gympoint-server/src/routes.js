@@ -1,11 +1,8 @@
 import { Router } from 'express';
-import multer from 'multer';
-import multerConfig from './config/multer';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import StudentController from './app/controllers/StudentController';
-import FileController from './app/controllers/FileController';
 import PlanController from './app/controllers/PlanController';
 import RegistrationController from './app/controllers/RegistrationController';
 import CkeckinController from './app/controllers/CheckinController';
@@ -27,7 +24,6 @@ import validateStudentUpdate from './app/validators/StudentUpdate';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
-const upload = multer(multerConfig);
 
 routes.post('/users', validateUserStore, UserController.store);
 routes.post('/sessions', validateSessionStore, SessionController.store);
@@ -47,8 +43,6 @@ routes.use(authMiddleware);
 
 routes.put('/users', validateUserUpdate, UserController.update);
 
-routes.post('/files', upload.single('file'), FileController.store);
-
 routes.post('/students', validateStudentStore, StudentController.store);
 routes.put(
   '/students/:idStudent',
@@ -60,6 +54,7 @@ routes.get('/students/:idStudent', StudentController.show);
 routes.delete('/students/:idStudent', StudentController.delete);
 
 routes.get('/plans', PlanController.index);
+routes.get('/plans/:idPlan', PlanController.show);
 routes.post('/plans', validatePlanStore, PlanController.store);
 routes.put('/plans/:idPlan', validatePlanUpdate, PlanController.update);
 routes.delete('/plans/:idPlan', PlanController.delete);

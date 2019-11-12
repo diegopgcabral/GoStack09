@@ -14,7 +14,7 @@ module.exports = {
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       },
       plan_id: {
         type: Sequelize.INTEGER,

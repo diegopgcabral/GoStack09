@@ -5,11 +5,18 @@ class PlanController {
     const { page = 1 } = req.query;
 
     const plans = await Plan.findAll({
-      attributes: ['idPlan', 'title', 'duration', 'price'],
-      limit: 20,
-      offset: (page - 1) * 20,
+      attributes: ['id', 'title', 'duration', 'price'],
+      limit: 10,
+      offset: (page - 1) * 10,
+      order: ['duration'],
     });
     return res.json(plans);
+  }
+
+  async show(req, res) {
+    const { idPlan } = req.params;
+    const plan = await Plan.findByPk(idPlan);
+    return res.json(plan);
   }
 
   async store(req, res) {
