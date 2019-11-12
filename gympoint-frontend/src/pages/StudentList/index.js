@@ -9,7 +9,7 @@ import { Container, Content, Pagination } from './styles';
 import api from '~/services/api';
 
 export default function Student() {
-  const [searchStudent, setSearchStudent] = useState();
+  const [searchStudent, setSearchStudent] = useState('');
   const [students, setStudents] = useState([]);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
@@ -18,7 +18,7 @@ export default function Student() {
     async function searchStudents() {
       const response = await api.get('students', {
         params: {
-          name: searchStudent || '',
+          name: searchStudent,
           page,
         },
       });
