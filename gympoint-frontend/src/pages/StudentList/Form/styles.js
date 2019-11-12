@@ -64,12 +64,7 @@ export const Content = styled.div`
 
   form {
     padding: 30px;
-
-    input[type='number']::-webkit-outer-spin-button,
-    input[type='number']::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+    border: solid 1px #dddddd;
 
     > .last-row {
       display: flex;
@@ -111,6 +106,7 @@ export const Content = styled.div`
       font-size: 14px;
       color: #ee4d64;
       margin-top: 5px;
+      font-weight: bold;
     }
   }
 `;

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { Form, Input } from '@rocketseat/unform';
@@ -31,7 +32,23 @@ const schema = Yup.object().shape({
     .required('Altura é obrigatória'),
 });
 
-export default function AddStudent() {
+export default function FormStudent() {
+  const { idStudent } = useParams();
+  const [student, setStudent] = useState([]);
+  const [edit, setEdit] = useState(false);
+
+  useEffect(() => {
+    if (idStudent) {
+      setEdit(true);
+      async function loadStudent() {
+        const response = await api.get(`students/${idStudent}`);
+        setStudent(response.data);
+      }
+
+      loadStudent();
+    }
+  }, [idStudent]);
+
   async function handleSubmit({ name, email, age, height, weight }) {
     try {
       await api.post('students', {
@@ -44,7 +61,7 @@ export default function AddStudent() {
       toast.success('Aluno cadastrado com sucesso!');
       history.push('/students');
     } catch (err) {
-      toast.error('Não foi possível cadastrar o aluno!');
+      toast.error(`Não foi possível cadastrar o aluno! - Erro: ${err.message}`);
     }
   }
 
@@ -54,20 +71,20 @@ export default function AddStudent() {
   return (
     <Container>
       <header>
-        <h1>Cadastro de aluno</h1>
+        <h1>{edit ? 'Edição de aluno' : 'Cadastro de aluno'}</h1>
         <aside>
           <button className="return" type="button" onClick={handleReturn}>
             <MdKeyboardArrowLeft color="#FFF" size={24} />
             VOLTAR
           </button>
-          <button type="submit" form="form-add-student">
+          <button type="submit" form="form-student">
             <MdCheck color="#FFF" size={24} />
             SALVAR
           </button>
         </aside>
       </header>
       <Content>
-        <Form id="form-add-student" schema={schema} onSubmit={handleSubmit}>
+        <Form id="form-student" schema={schema} onSubmit={handleSubmit}>
           <div>
             <h3>NOME COMPLETO</h3>
             <Input

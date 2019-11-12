@@ -54,6 +54,8 @@ export const Content = styled.div`
 
     span {
       color: #ee4d64;
+      border-radius: 4px;
+      margin-top: -12px;
       font-size: 12px;
       font-weight: bold;
     }

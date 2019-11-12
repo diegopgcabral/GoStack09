@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  width: 1200px;
+  width: 830px;
   margin: 0 auto;
   margin-top: 30px;
 
@@ -24,6 +24,7 @@ export const Container = styled.div`
 
       a {
         width: 142px;
+        height: 36px;
         padding: 5px;
         border-radius: 4px;
         background-color: #ee4d64;
@@ -74,6 +75,7 @@ export const Content = styled.div`
     width: 100%;
     text-align: left;
     padding: 30px;
+    border: solid 1px #dddddd;
 
     thead {
       font-size: 16px;
@@ -96,7 +98,7 @@ export const Content = styled.div`
             margin: 0 10px;
           }
 
-          > .btnEdit {
+          a {
             font-size: 15px;
             color: #4d85ee;
           }

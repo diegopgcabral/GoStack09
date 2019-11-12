@@ -15,10 +15,17 @@ export default function Student() {
   useEffect(() => {
     async function searchStudents() {
       // const response = await api.get(`students?page=${page}&name=Diego`);
+      /**
       const response = await api.get(
         searchStudent ? `students?name=${searchStudent}` : 'students'
       );
-
+       */
+      const response = await api.get('students', {
+        params: {
+          name: searchStudent || '',
+          // page,
+        },
+      });
       setStudents(response.data);
     }
 
@@ -29,9 +36,10 @@ export default function Student() {
     if (window.confirm('Deseja realmente excluir esse aluno?')) {
       try {
         await api.delete(`students/${id}`);
+        setSearchStudent('');
         toast.success('Aluno excluido com sucesso!');
       } catch (err) {
-        toast.error('Não foi possível excluir o aluno!');
+        toast.error(`Não foi possível excluir o aluno! - Erro: ${err.message}`);
       }
     }
   }
@@ -41,7 +49,7 @@ export default function Student() {
       <header>
         <h1>Gerenciando alunos</h1>
         <aside>
-          <Link to="/student/add">
+          <Link to="/student/form">
             <MdAdd color="#FFF" fontSize={18} />
             CADASTRAR
           </Link>
@@ -73,9 +81,7 @@ export default function Student() {
                 <td>{student.email}</td>
                 <td align="center">{student.age}</td>
                 <td>
-                  <button className="btnEdit" type="button">
-                    editar
-                  </button>
+                  <Link to={`/student/form/${student.id}`}>editar</Link>
                   <button
                     className="btnDelete"
                     type="button"
