@@ -8,8 +8,8 @@ class AnswerController {
     const helpOrders = await HelpOrder.findAll({
       where: { answer: null },
       attributes: ['id', 'question'],
-      limit: 20,
-      offset: (page - 1) * 20,
+      limit: 10,
+      offset: (page - 1) * 10,
       include: [
         {
           model: Student,
@@ -18,12 +18,6 @@ class AnswerController {
         },
       ],
     });
-
-    if (!helpOrders[0]) {
-      return res
-        .status(400)
-        .json({ error: 'Não existem pedidos de auxilio sem resposta' });
-    }
 
     return res.json(helpOrders);
   }
