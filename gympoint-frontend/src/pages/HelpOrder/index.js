@@ -4,6 +4,7 @@ import { Container, Content, Pagination } from './styles';
 
 import api from '~/services/api';
 import ModalHelpOrder from '~/components/ModalHelpOrder';
+import NoResult from '~/components/NoResult';
 
 export default function HelpOrder() {
   const [helpOrders, setHelpOrders] = useState([]);
@@ -12,7 +13,8 @@ export default function HelpOrder() {
   const [hasNextPage, setHasNextPage] = useState(false);
 
   useEffect(() => {
-    async function loadPlans() {
+    async function loadHelpOrders() {
+      console.tron.log(`loadHelpOrders: ${page}`);
       const response = await api.get('help-orders', {
         params: {
           page,
@@ -28,7 +30,7 @@ export default function HelpOrder() {
       setHelpOrders(response.data);
     }
 
-    loadPlans();
+    loadHelpOrders();
   }, [page]);
 
   function handleOpenModal(payload) {
@@ -37,6 +39,7 @@ export default function HelpOrder() {
 
   function handlePagination(event) {
     setPage(event === 'previous' ? page - 1 : page + 1);
+    console.tron.log(`handlePagination: ${page}`);
   }
 
   return (
@@ -47,29 +50,35 @@ export default function HelpOrder() {
           <h1>Pedidos de auxílio</h1>
         </header>
         <Content>
-          <table>
-            <thead>
-              <tr>
-                <th>ALUNO</th>
-              </tr>
-            </thead>
-            <tbody>
-              {helpOrders.map(helpOrder => (
-                <tr>
-                  <td>{helpOrder.student.name}</td>
-                  <td>
-                    <button
-                      className="btnAnswer"
-                      type="button"
-                      onClick={() => handleOpenModal(helpOrder)}
-                    >
-                      responder
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {helpOrders.length === 0 ? (
+            <NoResult />
+          ) : (
+            <>
+              <table>
+                <thead>
+                  <tr>
+                    <th>ALUNO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {helpOrders.map(helpOrder => (
+                    <tr>
+                      <td>{helpOrder.student.name}</td>
+                      <td>
+                        <button
+                          className="btnAnswer"
+                          type="button"
+                          onClick={() => handleOpenModal(helpOrder)}
+                        >
+                          responder
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
         </Content>
 
         <Pagination>

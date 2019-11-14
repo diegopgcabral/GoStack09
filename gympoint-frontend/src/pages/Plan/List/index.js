@@ -7,6 +7,7 @@ import { Container, Content, Pagination } from './styles';
 
 import api from '~/services/api';
 import { formatCurrencyBR } from '~/util/format';
+import NoResult from '~/components/NoResult';
 
 export default function Plan() {
   const [plans, setPlans] = useState([]);
@@ -65,39 +66,46 @@ export default function Plan() {
           </Link>
         </aside>
       </header>
+
       <Content>
-        <table>
-          <thead>
-            <tr>
-              <th>TÍTULO</th>
-              <th align="center">DURAÇÃO</th>
-              <th align="center">VALOR p/ MÊS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {plans.map(plan => (
-              <tr>
-                <td>{plan.title}</td>
-                <td align="center">
-                  {plan.duration > 1
-                    ? `${plan.duration} meses`
-                    : `${plan.duration} mês`}
-                </td>
-                <td align="center">{formatCurrencyBR(plan.price)}</td>
-                <td>
-                  <Link to={`/plans/form/${plan.id}`}>editar</Link>
-                  <button
-                    className="btnDelete"
-                    type="button"
-                    onClick={() => handleDelete(plan.id)}
-                  >
-                    apagar
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {plans.length === 0 ? (
+          <NoResult />
+        ) : (
+          <>
+            <table>
+              <thead>
+                <tr>
+                  <th>TÍTULO</th>
+                  <th align="center">DURAÇÃO</th>
+                  <th align="center">VALOR p/ MÊS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {plans.map(plan => (
+                  <tr>
+                    <td>{plan.title}</td>
+                    <td align="center">
+                      {plan.duration > 1
+                        ? `${plan.duration} meses`
+                        : `${plan.duration} mês`}
+                    </td>
+                    <td align="center">{formatCurrencyBR(plan.price)}</td>
+                    <td>
+                      <Link to={`/plans/form/${plan.id}`}>editar</Link>
+                      <button
+                        className="btnDelete"
+                        type="button"
+                        onClick={() => handleDelete(plan.id)}
+                      >
+                        apagar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
       </Content>
 
       <Pagination>

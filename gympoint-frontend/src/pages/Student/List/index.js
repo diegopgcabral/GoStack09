@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Container, Content, Pagination } from './styles';
 
 import api from '~/services/api';
+import NoResult from '~/components/NoResult';
 
 export default function Student() {
   const [searchStudent, setSearchStudent] = useState('');
@@ -74,36 +75,41 @@ export default function Student() {
         </aside>
       </header>
       <Content>
-        <table>
-          <thead>
-            <tr>
-              <th align="left">NOME</th>
-              <th align="left">E-MAIL</th>
-              <th align="center">IDADE</th>
-            </tr>
-          </thead>
-          <tbody>
-            {students.map(student => (
-              <tr>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
-                <td align="center">{student.age}</td>
-                <td>
-                  <Link to={`/students/form/${student.id}`}>editar</Link>
-                  <button
-                    className="btnDelete"
-                    type="button"
-                    onClick={() => handleDelete(student.id)}
-                  >
-                    apagar
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {students.length === 0 ? (
+          <NoResult />
+        ) : (
+          <>
+            <table>
+              <thead>
+                <tr>
+                  <th align="left">NOME</th>
+                  <th align="left">E-MAIL</th>
+                  <th align="center">IDADE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map(student => (
+                  <tr>
+                    <td>{student.name}</td>
+                    <td>{student.email}</td>
+                    <td align="center">{student.age}</td>
+                    <td>
+                      <Link to={`/students/form/${student.id}`}>editar</Link>
+                      <button
+                        className="btnDelete"
+                        type="button"
+                        onClick={() => handleDelete(student.id)}
+                      >
+                        apagar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
       </Content>
-
       <Pagination>
         <button
           type="button"
