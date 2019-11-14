@@ -9,23 +9,22 @@ import { Container, Content } from './styles';
 
 import history from '~/services/history';
 import api from '~/services/api';
+import { decimalMask } from '~/util/format';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório'),
   email: Yup.string()
-    .email()
+    .email('Informe um e-mail válido')
     .required('E-mail é obrigatório'),
-  age: Yup.number()
-    .typeError('Idade deve ser numérico')
-    .min(1, 'Idade deve ser maior ou igual a 1 ano')
+  age: Yup.number('Somente Números')
+    .positive('Idade Inválida')
     .required('Idade é obrigatória'),
-  weight: Yup.number()
-    .typeError('Peso deve ser numérico')
-    .min(1, 'Peso não pode ser menor do que 1')
+  weight: Yup.number('Somente Números')
+    .positive('Peso Inválido')
     .required('Peso é obrigatório'),
-  height: Yup.number()
+  height: Yup.number('Somente Números')
     .typeError('Altura deve ser numérico')
-    .min(1, 'Altura não pode ser menor do que 1')
+    .positive('Altura Inválida')
     .required('Altura é obrigatória'),
 });
 
@@ -83,6 +82,7 @@ export default function FormStudent() {
   function handleReturn() {
     history.goBack();
   }
+
   return (
     <Container>
       <header>
@@ -101,7 +101,6 @@ export default function FormStudent() {
       <Content>
         <Form
           id="form-student"
-          initialData={student}
           schema={schema}
           onSubmit={edit ? handleEdit : handleNew}
         >
@@ -112,6 +111,8 @@ export default function FormStudent() {
               type="text"
               autoComplete="off"
               placeholder="Digite seu nome completo"
+              value={student ? student.name : null}
+              onChange={e => setStudent({ ...student, name: e.target.value })}
             />
           </div>
           <div>
@@ -121,6 +122,8 @@ export default function FormStudent() {
               type="email"
               autoComplete="off"
               placeholder="Digite seu endereço de e-mail"
+              value={student ? student.email : null}
+              onChange={e => setStudent({ ...student, email: e.target.value })}
             />
           </div>
           <div className="last-row">
@@ -128,9 +131,11 @@ export default function FormStudent() {
               <h3>IDADE </h3>
               <Input
                 name="age"
-                type="text"
+                type="number"
                 autoComplete="off"
                 placeholder="Digite sua idade"
+                value={student ? student.age : null}
+                onChange={e => setStudent({ ...student, age: e.target.value })}
               />
             </div>
             <div>
@@ -140,6 +145,13 @@ export default function FormStudent() {
                 type="text"
                 autoComplete="off"
                 placeholder="Digite seu peso"
+                value={student ? student.weight : null}
+                onChange={e =>
+                  setStudent({
+                    ...student,
+                    weight: decimalMask(e.target.value),
+                  })
+                }
               />
             </div>
             <div>
@@ -149,6 +161,13 @@ export default function FormStudent() {
                 type="text"
                 autoComplete="off"
                 placeholder="Digite sua altura"
+                value={student ? student.height : null}
+                onChange={e =>
+                  setStudent({
+                    ...student,
+                    height: decimalMask(e.target.value),
+                  })
+                }
               />
             </div>
           </div>

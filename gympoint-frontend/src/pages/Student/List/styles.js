@@ -131,12 +131,12 @@ export const Pagination = styled.div`
     border: none;
     padding: 10px;
     border-radius: 4px;
-    background-color: #555;
+    background-color: #cccccc;
     color: #fff;
     font-weight: bold;
 
     &:hover {
-      background: ${darken(0.05, '#555')};
+      background: ${darken(0.05, '#cccccc')};
     }
   }
   strong {

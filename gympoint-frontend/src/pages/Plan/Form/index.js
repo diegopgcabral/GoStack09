@@ -10,17 +10,16 @@ import { Container, Content } from './styles';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { formatCurrencyBR, numberMask, moneyMask } from '~/util/format';
+import { formatCurrencyBR, moneyMask } from '~/util/format';
 
 const schema = Yup.object().shape({
   title: Yup.string().required('Título do plano é obrigatório'),
   duration: Yup.number()
-    .typeError('Duração do plano deve ser numérico')
-    .min(1, 'Duração do plano deve ser maior ou igual a 1 mês')
+    .positive('Duração deve ser >= 1')
     .required('Duração é obrigatório'),
   price: Yup.number()
     .typeError('Preço deve ser numérico')
-    .min(1, 'Preço deve ser maior ou igual a 1')
+    .positive('Preço deve ser >= 0.1')
     .required('Preço é obrigatório'),
 });
 
@@ -122,11 +121,11 @@ export default function FormPlan() {
               <h3>DURAÇÃO (em meses) </h3>
               <Input
                 name="duration"
-                type="text"
+                type="number"
                 autoComplete="off"
                 placeholder="Digite os meses"
                 value={duration || null}
-                onChange={e => setDuration(numberMask(e.target.value))}
+                onChange={e => setDuration(e.target.value)}
               />
             </div>
             <div>

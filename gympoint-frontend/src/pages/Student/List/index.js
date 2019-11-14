@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { MdAdd } from 'react-icons/md';
+import { MdAdd, MdSearch } from 'react-icons/md';
+import { Input } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
 
 import { Container, Content, Pagination } from './styles';
 
 import api from '~/services/api';
-import { formatCurrencyBR } from '~/util/format';
 
-export default function Plan() {
-  const [plans, setPlans] = useState([]);
+export default function Student() {
+  const [searchStudent, setSearchStudent] = useState('');
+  const [students, setStudents] = useState([]);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
   useEffect(() => {
-    async function loadPlans() {
-      const response = await api.get('plans', {
+    async function searchStudents() {
+      const response = await api.get('students', {
         params: {
+          name: searchStudent,
           page,
         },
       });
@@ -27,25 +29,21 @@ export default function Plan() {
         setHasNextPage(false);
       }
 
-      setPlans(response.data);
+      setStudents(response.data);
     }
 
-    loadPlans();
-  }, [page]);
+    searchStudents();
+  }, [page, searchStudent]);
 
   async function handleDelete(id) {
-    if (window.confirm('Deseja realmente excluir esse plano?')) {
+    if (window.confirm('Deseja realmente excluir esse aluno?')) {
       try {
-        await api.delete(`plans/${id}`);
-
-        const newList = plans.filter(item => item.id !== id);
-        setPlans(newList);
-
-        toast.success('Plano excluido com sucesso!');
+        await api.delete(`students/${id}`);
+        const newList = students.filter(item => item.id !== id);
+        setStudents(newList);
+        toast.success('Aluno excluido com sucesso!');
       } catch (err) {
-        toast.error(
-          `Não foi possível excluir o plano selecionado - Erro: ${err.message}`
-        );
+        toast.error(`Não foi possível excluir o aluno! - Erro: ${err.message}`);
       }
     }
   }
@@ -57,39 +55,45 @@ export default function Plan() {
   return (
     <Container>
       <header>
-        <h1>Gerenciando planos</h1>
+        <h1>Gerenciando alunos</h1>
         <aside>
-          <Link to="/plan/form">
+          <Link to="/students/form">
             <MdAdd color="#FFF" fontSize={18} />
             CADASTRAR
           </Link>
+          <div>
+            <MdSearch color="#999" fontSize={18} />
+            <Input
+              name="searchName"
+              type="text"
+              autoComplete="off"
+              placeholder="Buscar aluno"
+              onChange={e => setSearchStudent(e.target.value)}
+            />
+          </div>
         </aside>
       </header>
       <Content>
         <table>
           <thead>
             <tr>
-              <th>TÍTULO</th>
-              <th align="center">DURAÇÃO</th>
-              <th align="center">VALOR p/ MÊS</th>
+              <th align="left">NOME</th>
+              <th align="left">E-MAIL</th>
+              <th align="center">IDADE</th>
             </tr>
           </thead>
           <tbody>
-            {plans.map(plan => (
+            {students.map(student => (
               <tr>
-                <td>{plan.title}</td>
-                <td align="center">
-                  {plan.duration > 1
-                    ? `${plan.duration} meses`
-                    : `${plan.duration} mês`}
-                </td>
-                <td align="center">{formatCurrencyBR(plan.price)}</td>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td align="center">{student.age}</td>
                 <td>
-                  <Link to={`/plan/form/${plan.id}`}>editar</Link>
+                  <Link to={`/students/form/${student.id}`}>editar</Link>
                   <button
                     className="btnDelete"
                     type="button"
-                    onClick={() => handleDelete(plan.id)}
+                    onClick={() => handleDelete(student.id)}
                   >
                     apagar
                   </button>

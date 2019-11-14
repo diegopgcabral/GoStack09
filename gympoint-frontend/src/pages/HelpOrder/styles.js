@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.div`
   width: 600px;
@@ -50,9 +51,6 @@ export const Content = styled.div`
             background: none;
             border: none;
             margin: 0 10px;
-          }
-
-          a {
             font-size: 15px;
             color: #4d85ee;
           }
@@ -68,5 +66,29 @@ export const Content = styled.div`
         }
       }
     }
+  }
+`;
+
+export const Pagination = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #cccccc;
+    color: #fff;
+    font-weight: bold;
+
+    &:hover {
+      background: ${darken(0.06, '#cccccc')};
+    }
+  }
+  strong {
+    margin: 0 10px;
+    color: #444444;
   }
 `;

@@ -66,6 +66,12 @@ export const Content = styled.div`
     padding: 30px;
     border: solid 1px #dddddd;
 
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
     > .last-row {
       display: flex;
       flex-direction: row;
