@@ -41,6 +41,28 @@ class RegistrationController {
     return res.json(registration);
   }
 
+  async show(req, res) {
+    const { idRegistration } = req.params;
+
+    const registration = await Registration.findOne({
+      where: { id: idRegistration },
+      attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['id', 'name', 'email'],
+        },
+        {
+          model: Plan,
+          as: 'plan',
+          attributes: ['id', 'title'],
+        },
+      ],
+    });
+    return res.json(registration);
+  }
+
   async update(req, res) {
     const { idRegistration } = req.params;
     const { student_id, plan_id, start_date } = req.body;

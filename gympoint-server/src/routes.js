@@ -65,6 +65,7 @@ routes.post(
   RegistrationController.store
 );
 routes.get('/registrations', RegistrationController.index);
+routes.get('/registrations/:idRegistration', RegistrationController.show);
 routes.put(
   '/registrations/:idRegistration',
   validateRegistrationUpdate,
