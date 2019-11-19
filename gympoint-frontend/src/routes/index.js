@@ -12,7 +12,6 @@ import PlanFrom from '~/pages/Plan/Form';
 import Registration from '~/pages/Registration/List';
 import RegistrationForm from '~/pages/Registration/Form';
 import HelpOrder from '~/pages/HelpOrder';
-// import Answer from '~/pages/Answer';
 
 export default function Routes() {
   return (
