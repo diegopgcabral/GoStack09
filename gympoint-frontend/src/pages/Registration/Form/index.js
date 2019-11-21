@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { format, addMonths, parseISO } from 'date-fns';
-
 import { toast } from 'react-toastify';
-
-import AsyncSelect from 'react-select/async';
-
-import { Form, Input } from '@rocketseat/unform';
-
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
 
-import api from '~/services/api';
-import history from '~/services/history';
-
-import { formatCurrencyBR } from '~/util/format';
+import AsyncSelect from 'react-select/async';
+import { Form, Input } from '@rocketseat/unform';
 
 import { Container, Content } from './styles';
+import { formatCurrencyBR } from '~/util/format';
+import api from '~/services/api';
+import history from '~/services/history';
 
 export default function FormRegistration() {
   const { idRegistration } = useParams();
@@ -48,6 +43,14 @@ export default function FormRegistration() {
       );
   }
 
+  async function loadRegistrationForEdit() {
+    await api.get(`registrations/${idRegistration}`).then(response => {
+      setStudentSelected(response.data.student.id);
+      setDateSelected(format(parseISO(response.data.start_date), 'yyyy-MM-dd'));
+      setPlanSelected(response.data.plan.id);
+    });
+  }
+
   useEffect(() => {
     loadRegistration();
 
@@ -56,14 +59,6 @@ export default function FormRegistration() {
       loadRegistrationForEdit();
     }
   }, []);
-
-  async function loadRegistrationForEdit() {
-    await api.get(`registrations/${idRegistration}`).then(response => {
-      setStudentSelected(response.data.student_id);
-      setDateSelected(format(parseISO(response.data.start_date), 'yyyy-MM-dd'));
-      setPlanSelected(response.data.plan_id);
-    });
-  }
 
   const filterStudents = (inputValue: string) => {
     return students.filter(i =>
@@ -77,27 +72,22 @@ export default function FormRegistration() {
 
   useEffect(() => {
     if (planSelected && plans) {
-      const planIndexSelected = plans.findIndex(
-        plan => plan.id === planSelected
-      );
+      const indexPlan = plans.findIndex(plan => plan.id == planSelected);
 
       setEndDate(
         format(
-          addMonths(new Date(dateSelected), plans[planIndexSelected].duration),
+          addMonths(new Date(dateSelected), plans[indexPlan].duration),
           'dd/MM/yyyy'
         )
       );
-      setTotalPrice(
-        plans[planIndexSelected].price * plans[planIndexSelected].duration
-      );
+
+      setTotalPrice(plans[indexPlan].price * plans[indexPlan].duration);
     }
   }, [planSelected, dateSelected]);
 
   async function handleNew() {
-    if (!studentSelected || !planSelected || !dateSelected) {
-      toast.warning(
-        'Você precisa selecionar o aluno, o plano e a data de início'
-      );
+    if (!studentSelected || !planSelected) {
+      toast.warning('Você precisa selecionar aluno e plano!');
     } else {
       await api
         .post('registrations', {
@@ -106,20 +96,18 @@ export default function FormRegistration() {
           start_date: dateSelected,
         })
         .then(() => {
-          toast.success('Matrícula efetivada com sucesso!');
+          toast.success('Matrícula ativada com sucesso!');
           history.goBack();
         })
         .catch(error => {
-          toast.error(error);
+          toast.error('Aluno já possui uma matrícula ativa!');
         });
     }
   }
 
   async function handleEdit() {
-    if (!studentSelected || !planSelected || !dateSelected) {
-      toast.warning(
-        'Você precisa selecionar o aluno, o plano e a data de início'
-      );
+    if (!studentSelected || !planSelected) {
+      toast.warning('Você precisa selecionar aluno e plano!');
     } else {
       await api
         .put(`registrations/${idRegistration}`, {
@@ -132,7 +120,7 @@ export default function FormRegistration() {
           history.goBack();
         })
         .catch(error => {
-          toast.error(error);
+          toast.error('Erro ao atualizar a matrícula do aluno');
         });
     }
   }
@@ -195,8 +183,6 @@ export default function FormRegistration() {
               <Input
                 name="startDate"
                 type="date"
-                autoComplete="off"
-                placeholder="Escolha a data"
                 onChange={e => setDateSelected(e.target.value)}
                 value={dateSelected}
               />
