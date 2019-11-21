@@ -80,24 +80,26 @@ export default function Registration() {
             </tr>
           </thead>
           <tbody>
-            {registrations.map(register => (
+            {registrations.map(registration => (
               <tr>
-                <td>{register.student.name}</td>
-                <td align="center">{register.plan.title}</td>
-                <td align="center">{register.formattedStartDate}</td>
-                <td align="center">{register.formattedEndDate}</td>
+                <td>{registration.student.name}</td>
+                <td align="center">{registration.plan.title}</td>
+                <td align="center">{registration.formattedStartDate}</td>
+                <td align="center">{registration.formattedEndDate}</td>
                 <td align="center">
                   <MdCheckCircle
                     fontSize={20}
-                    color={register.active ? '#42cb59' : '#999'}
+                    color={registration.active ? '#42cb59' : '#999'}
                   />
                 </td>
                 <td>
-                  <Link to={`registration/form/${register.id}`}>editar</Link>
+                  <Link to={`registrations/form/${registration.id}`}>
+                    editar
+                  </Link>
                   <button
                     className="btnDelete"
                     type="button"
-                    onClick={() => handleDelete(register.id)}
+                    onClick={() => handleDelete(registration.id)}
                   >
                     apagar
                   </button>

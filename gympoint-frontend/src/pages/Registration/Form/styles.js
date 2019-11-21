@@ -99,6 +99,9 @@ export const Content = styled.div`
           border: solid 1px #dddddd;
           background-color: #ffffff;
           padding-left: 10px;
+          font-size: 16px;
+          color: #999999;
+          font-family: Roboto;
         }
 
         input {
