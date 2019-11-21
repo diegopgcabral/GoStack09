@@ -8,8 +8,8 @@ class AnswerController {
     const helpOrders = await HelpOrder.findAll({
       where: { answer: null },
       attributes: ['id', 'question'],
-      limit: 10,
-      offset: (page - 1) * 10,
+      limit: 20,
+      offset: (page - 1) * 20,
       include: [
         {
           model: Student,

@@ -36,8 +36,8 @@ class HelpOrderController {
       where: { student_id: idStudent },
       order: ['created_at'],
       attributes: ['id', 'question', 'answer', 'answer_at'],
-      limit: 10,
-      offset: (page - 1) * 10,
+      limit: 20,
+      offset: (page - 1) * 20,
     });
 
     return res.json(helpOrders);

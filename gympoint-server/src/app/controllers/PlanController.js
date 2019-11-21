@@ -6,8 +6,8 @@ class PlanController {
 
     const plans = await Plan.findAll({
       attributes: ['id', 'title', 'duration', 'price'],
-      limit: 10,
-      offset: (page - 1) * 10,
+      limit: 20,
+      offset: (page - 1) * 20,
       order: ['duration'],
     });
     return res.json(plans);
