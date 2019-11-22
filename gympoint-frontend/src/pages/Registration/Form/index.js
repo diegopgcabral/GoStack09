@@ -58,6 +58,7 @@ export default function FormRegistration() {
       setEdit(true);
       loadRegistrationForEdit();
     }
+    // eslint-disable-next-line
   }, []);
 
   const filterStudents = (inputValue: string) => {
@@ -72,7 +73,9 @@ export default function FormRegistration() {
 
   useEffect(() => {
     if (planSelected && plans) {
+      // eslint-disable-next-line
       const indexPlan = plans.findIndex(plan => plan.id == planSelected);
+      console.tron.log(indexPlan);
 
       setEndDate(
         format(
@@ -83,6 +86,7 @@ export default function FormRegistration() {
 
       setTotalPrice(plans[indexPlan].price * plans[indexPlan].duration);
     }
+    // eslint-disable-next-line
   }, [planSelected, dateSelected]);
 
   async function handleNew() {

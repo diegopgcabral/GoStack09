@@ -62,7 +62,7 @@ export const Content = styled.div`
   form {
     padding: 20px;
     border: solid 1px #dddddd;
-    color: #999999;
+    color: #444444;
 
     input[type='date']::-webkit-outer-spin-button,
     input[type='date']::-webkit-inner-spin-button {
@@ -75,6 +75,10 @@ export const Content = styled.div`
       font-weight: bold;
       color: #444444;
       margin-bottom: 5px;
+    }
+
+    select {
+      color: #666666;
     }
 
     > .last-row {
@@ -101,7 +105,7 @@ export const Content = styled.div`
           border: solid 1px #dddddd;
           background-color: #ffffff;
           padding-left: 10px;
-          font-size: 16px;
+          font-size: 14px;
           color: #666666;
           font-family: Roboto;
         }

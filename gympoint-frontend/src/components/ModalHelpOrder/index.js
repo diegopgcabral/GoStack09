@@ -16,7 +16,7 @@ export default function ModalHelpOrder({ payload }) {
     } else {
       try {
         await api.put(`/help-orders/${payload.id}/answer`, {
-          answerHelpOrder,
+          answer: answerHelpOrder,
         });
         toast.success('Pedido de auxílio respondido com sucesso!');
 
@@ -25,7 +25,7 @@ export default function ModalHelpOrder({ payload }) {
         }, 2000);
       } catch (err) {
         toast.error(
-          `Não foi possível responder o pedido de auxílio. Detalhes: ${err.message}`
+          `Não foi possível responder o pedido de auxílio. Erro: ${err.message}`
         );
       }
     }

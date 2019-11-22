@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { MdAdd } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -11,28 +11,33 @@ import NoResult from '~/components/NoResult';
 
 export default function Plan() {
   const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
+  const handlePagination = useCallback(async () => {
+    const response = await api.get(`plans?page=${page + 1}`);
+
+    if (response.data.length > 0) {
+      setHasNextPage(true);
+    } else {
+      setHasNextPage(false);
+    }
+  }, [page]);
+
   useEffect(() => {
+    setLoading(true);
     async function loadPlans() {
       const response = await api.get('plans', {
         params: {
           page,
         },
       });
-
-      if (response.data.length > 0) {
-        setHasNextPage(true);
-      } else {
-        setHasNextPage(false);
-      }
-
       setPlans(response.data);
+      setLoading(false);
     }
-
     loadPlans();
-  }, [page]);
+  }, [handlePagination, page]);
 
   async function handleDelete(id) {
     if (window.confirm('Deseja realmente excluir esse plano?')) {
@@ -51,8 +56,16 @@ export default function Plan() {
     }
   }
 
-  function handlePagination(event) {
-    setPage(event === 'previous' ? page - 1 : page + 1);
+  // function handlePagination(event) {
+  //   setPage(event === 'previous' ? page - 1 : page + 1);
+  // }
+
+  function handlePreviousPage() {
+    setPage(page - 1);
+  }
+
+  function handleNextPage() {
+    setPage(page + 1);
   }
 
   return (
@@ -108,25 +121,23 @@ export default function Plan() {
         )}
       </Content>
 
-      <Pagination>
-        <button
-          type="button"
-          onClick={() => handlePagination('previous')}
-          disabled={page < 2}
-        >
-          Anterior
-        </button>
+      {(hasNextPage || page > 1) && (
+        <Pagination>
+          {page > 1 && (
+            <button type="button" onClick={handlePreviousPage}>
+              Página Anterior
+            </button>
+          )}
 
-        <strong>Página {page}</strong>
+          <strong>Página {page}</strong>
 
-        <button
-          type="button"
-          disabled={!hasNextPage}
-          onClick={() => handlePagination('next')}
-        >
-          Próximo
-        </button>
-      </Pagination>
+          {hasNextPage && (
+            <button type="button" onClick={handleNextPage}>
+              Próxima página
+            </button>
+          )}
+        </Pagination>
+      )}
     </Container>
   );
 }
