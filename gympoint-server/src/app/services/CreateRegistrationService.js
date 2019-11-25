@@ -18,7 +18,10 @@ class CreateRegistrationService {
       throw new Error('Aluno não encontrado');
     }
 
-    const checkStudent = await Registration.findOne({ where: { student_id } });
+    const checkStudent = await Registration.findOne({
+      where: { student_id },
+    });
+
     if (checkStudent) {
       throw new Error('Aluno já possui uma matrícula');
     }
