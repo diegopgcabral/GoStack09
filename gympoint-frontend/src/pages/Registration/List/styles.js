@@ -103,3 +103,27 @@ export const Content = styled.div`
     }
   }
 `;
+
+export const Pagination = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #cccccc;
+    color: #fff;
+    font-weight: bold;
+
+    &:hover {
+      background: ${darken(0.05, '#cccccc')};
+    }
+  }
+  strong {
+    margin: 0 10px;
+    color: #444444;
+  }
+`;

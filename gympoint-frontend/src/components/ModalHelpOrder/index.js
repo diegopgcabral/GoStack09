@@ -9,10 +9,13 @@ import api from '~/services/api';
 
 export default function ModalHelpOrder({ payload }) {
   const [answerHelpOrder, setAnswerHelpOrder] = useState();
+  const [loading, setLoading] = useState(false);
 
   async function handleAnswerHelpOrder() {
+    setLoading(true);
     if (!answerHelpOrder) {
       toast.error('Você deve preencher a resposta');
+      setLoading(false);
     } else {
       try {
         await api.put(`/help-orders/${payload.id}/answer`, {
@@ -44,7 +47,7 @@ export default function ModalHelpOrder({ payload }) {
           value={answerHelpOrder}
         />
         <button type="button" onClick={() => handleAnswerHelpOrder()}>
-          Responder aluno
+          {loading ? 'Respondendo...' : 'Responder aluno'}
         </button>
       </Form>
     </Container>

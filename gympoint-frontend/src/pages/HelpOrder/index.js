@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { Container, Content, Pagination } from './styles';
 
@@ -12,6 +12,15 @@ export default function HelpOrder() {
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
+  const handlePagination = useCallback(async () => {
+    const response = await api.get(`help-orders?page=${page + 1}`);
+    if (response.data.length > 0) {
+      setHasNextPage(true);
+    } else {
+      setHasNextPage(false);
+    }
+  }, [page]);
+
   useEffect(() => {
     async function loadHelpOrders() {
       console.tron.log(`loadHelpOrders: ${page}`);
@@ -21,25 +30,23 @@ export default function HelpOrder() {
         },
       });
 
-      if (response.data.length > 0) {
-        setHasNextPage(true);
-      } else {
-        setHasNextPage(false);
-      }
-
       setHelpOrders(response.data);
     }
 
     loadHelpOrders();
-  }, [page]);
+    handlePagination();
+  }, [handlePagination, page]);
 
   function handleOpenModal(payload) {
     setOpenModal({ open: !openModal.open, payload });
   }
 
-  function handlePagination(event) {
-    setPage(event === 'previous' ? page - 1 : page + 1);
-    console.tron.log(`handlePagination: ${page}`);
+  function handlePreviousPage() {
+    setPage(page - 1);
+  }
+
+  function handleNextPage() {
+    setPage(page + 1);
   }
 
   return (
@@ -81,25 +88,23 @@ export default function HelpOrder() {
           )}
         </Content>
 
-        <Pagination>
-          <button
-            type="button"
-            onClick={() => handlePagination('previous')}
-            disabled={page < 2}
-          >
-            Anterior
-          </button>
+        {(hasNextPage || page > 1) && (
+          <Pagination>
+            {page > 1 && (
+              <button type="button" onClick={handlePreviousPage}>
+                Página Anterior
+              </button>
+            )}
 
-          <strong>Página {page}</strong>
+            <strong>Página {page}</strong>
 
-          <button
-            type="button"
-            disabled={!hasNextPage}
-            onClick={() => handlePagination('next')}
-          >
-            Próximo
-          </button>
-        </Pagination>
+            {hasNextPage && (
+              <button type="button" onClick={handleNextPage}>
+                Próxima página
+              </button>
+            )}
+          </Pagination>
+        )}
       </Container>
     </>
   );

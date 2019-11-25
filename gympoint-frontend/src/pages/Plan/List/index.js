@@ -11,13 +11,11 @@ import NoResult from '~/components/NoResult';
 
 export default function Plan() {
   const [plans, setPlans] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
   const handlePagination = useCallback(async () => {
     const response = await api.get(`plans?page=${page + 1}`);
-
     if (response.data.length > 0) {
       setHasNextPage(true);
     } else {
@@ -26,7 +24,6 @@ export default function Plan() {
   }, [page]);
 
   useEffect(() => {
-    setLoading(true);
     async function loadPlans() {
       const response = await api.get('plans', {
         params: {
@@ -34,9 +31,9 @@ export default function Plan() {
         },
       });
       setPlans(response.data);
-      setLoading(false);
     }
     loadPlans();
+    handlePagination();
   }, [handlePagination, page]);
 
   async function handleDelete(id) {
@@ -55,10 +52,6 @@ export default function Plan() {
       }
     }
   }
-
-  // function handlePagination(event) {
-  //   setPage(event === 'previous' ? page - 1 : page + 1);
-  // }
 
   function handlePreviousPage() {
     setPage(page - 1);
