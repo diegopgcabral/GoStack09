@@ -8,7 +8,7 @@ export const Container = styled.View`
 `;
 
 export const CheckinButton = styled(Button)`
-  margin: 20px;
+  margin: 30px 0;
 `;
 
 export const CheckinList = styled.FlatList`
@@ -21,6 +21,7 @@ export const CheckinInfo = styled.View`
   margin-bottom: 10px;
 
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   border: 1px solid #dddddd;
   border-radius: 4px;
@@ -30,8 +31,11 @@ export const Label = styled.Text`
   color: #444444;
   font-size: 14px;
   font-weight: bold;
+  text-align: left;
 `;
 
 export const Time = styled.Text`
   color: #666666;
+  font-size: 14px;
+  text-align: right;
 `;
