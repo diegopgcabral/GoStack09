@@ -16,10 +16,23 @@ export default (signedIn = false) =>
         Sign: createSwitchNavigator({
           SignIn,
         }),
-        App: createBottomTabNavigator({
-          Checkin,
-          HelpOrderList,
-        }),
+        App: createBottomTabNavigator(
+          {
+            Checkin,
+            HelpOrderList,
+          },
+          {
+            resetOnBlur: true,
+            tabBarOptions: {
+              keyboardHidesTabBar: true,
+              activeTintColor: '#ee4e62',
+              inactiveTintColor: '#999999',
+              style: {
+                backgroundColor: '#ffffff',
+              },
+            },
+          }
+        ),
       },
       {
         initialRouteName: signedIn ? 'App' : 'Sign',

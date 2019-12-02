@@ -8,7 +8,7 @@ export function* signIn({ payload }) {
   try {
     const { idStudent } = payload;
 
-    const response = yield call(api.get, `students/${idStudent}`);
+    const response = yield call(api.post, `/sessions/student/${idStudent}`);
 
     const student = response.data;
 
