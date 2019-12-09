@@ -8,6 +8,7 @@ export const Container = styled.View`
 
   flex-direction: row;
   align-items: center;
+  padding: 0 5px;
 `;
 
 export const TInput = styled.TextInput.attrs({

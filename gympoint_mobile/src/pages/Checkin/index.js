@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { formatRelative, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-
-import { useSelector } from 'react-redux';
 
 import api from '~/services/api';
 import Header from '~/components/Header';
@@ -24,6 +24,7 @@ export default function Checkin() {
   async function loadCheckins() {
     try {
       const response = await api.get(`students/${student.id}/checkins`);
+
       const data = response.data.map((checkin, index, array) => ({
         ...checkin,
         seq: array.length - index,
@@ -47,6 +48,7 @@ export default function Checkin() {
   async function handleSubmit() {
     try {
       const response = await api.post(`students/${student.id}/checkins`);
+
       const data = {
         ...response.data,
         seq: checkins.length + 1,
@@ -59,6 +61,7 @@ export default function Checkin() {
           }
         ),
       };
+
       setCheckins([data, ...checkins]);
       loadCheckins();
     } catch (err) {
@@ -74,23 +77,29 @@ export default function Checkin() {
   }
 
   return (
-    <Container>
-      <CheckinButton onPress={handleSubmit}>Novo check-in</CheckinButton>
+    <>
+      <Header />
+      <Container>
+        <CheckinButton onPress={handleSubmit}>Novo check-in</CheckinButton>
 
-      <CheckinList
-        data={checkins}
-        keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => (
-          <CheckinInfo>
-            <Label>Check-in #{item.seq}</Label>
-            <Time>{item.dateFormatted}</Time>
-          </CheckinInfo>
-        )}
-      />
-    </Container>
+        <CheckinList
+          data={checkins}
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) => (
+            <CheckinInfo>
+              <Label>Check-in #{item.seq}</Label>
+              <Time>{item.dateFormatted}</Time>
+            </CheckinInfo>
+          )}
+        />
+      </Container>
+    </>
   );
 }
 
 Checkin.navigationOptions = {
-  headerTitle: () => <Header />,
+  tabBarLaber: 'Check-ins',
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="edit-location" size={20} color={tintColor} />
+  ),
 };

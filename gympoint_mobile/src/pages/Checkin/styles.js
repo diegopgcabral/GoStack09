@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const CheckinButton = styled(Button)`
   margin: 30px 0;
-  width: 370px;
+  width: 90%;
 `;
 
 export const CheckinList = styled.FlatList`

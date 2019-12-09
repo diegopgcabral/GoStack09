@@ -1,22 +1,23 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
+
+import { useDispatch } from 'react-redux';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import CommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import SignIn from '~/pages/SignIn';
 
 import Checkin from '~/pages/Checkin';
 
-import HelpOrderList from '~/pages/HelpOrder/List';
-import Answer from '~/pages/HelpOrder/Answer';
-import Question from '~/pages/HelpOrder/Question';
+import HelpOrderList from '~/pages/HelpOrderList';
+import HelpOrderDetail from '~/pages/HelpOrderDetail';
+import HelpOrderQuestion from '~/pages/HelpOrderQuestion';
 
 import { signOut } from '~/store/modules/auth/actions';
 
-function Logout({ navigation }) {
+function Logout() {
   const dispatch = useDispatch();
   dispatch(signOut());
   return SignIn;
@@ -25,11 +26,11 @@ function Logout({ navigation }) {
 Logout.navigationOptions = {
   tabBarLabel: 'Sair',
   tabBarIcon: ({ tintColor }) => (
-    <Icon name="undo" size={20} color={tintColor} />
+    <Icon name="compare-arrows" size={20} color={tintColor} />
   ),
 };
 
-export default (signedIn = false) =>
+export default (isSigned = false) =>
   createAppContainer(
     createSwitchNavigator(
       {
@@ -38,25 +39,18 @@ export default (signedIn = false) =>
         }),
         App: createBottomTabNavigator(
           {
-            Checkin: {
-              screen: createStackNavigator({ Checkin }),
-              navigationOptions: {
-                tabBarLabel: 'Check-ins',
-                tabBarIcon: ({ tintColor }) => (
-                  <Icon name="edit-location" size={20} color={tintColor} />
-                ),
-              },
-            },
-            Help: {
+            Checkin,
+            New: {
               screen: createStackNavigator(
                 {
                   HelpOrderList,
-                  Question,
-                  Answer,
+                  HelpOrderDetail,
+                  HelpOrderQuestion,
                 },
                 {
                   defaultNavigationOptions: {
-                    headerTintColor: '#f64f65',
+                    headerTransparent: true,
+                    headerTintColor: '#FFF',
                     headerLeftContainerStyle: {
                       marginLeft: 20,
                     },
@@ -64,7 +58,8 @@ export default (signedIn = false) =>
                 }
               ),
               navigationOptions: {
-                tabBarLabel: 'Pedir ajuda',
+                tabBarVisible: true,
+                tabBarLabel: 'Pedir Ajuda',
                 tabBarIcon: ({ tintColor }) => (
                   <Icon name="live-help" size={20} color={tintColor} />
                 ),
@@ -75,16 +70,16 @@ export default (signedIn = false) =>
           {
             resetOnBlur: true,
             tabBarOptions: {
-              keyboardHidesTabBar: true /* O teclado passa por acima da tab bar */,
               activeTintColor: '#ee4e62',
               inactiveTintColor: '#999',
+              keyboardHidesTabBar: true,
               style: {
-                backgroundColor: '#fff',
+                backgroundColor: '#FFF',
               },
             },
           }
         ),
       },
-      { initialRouteName: signedIn ? 'App' : 'Sign' }
+      { initialRouteName: isSigned ? 'App' : 'Sign' }
     )
   );
