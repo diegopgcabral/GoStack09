@@ -25,7 +25,6 @@ class HelpOrderController {
 
   async index(req, res) {
     const { idStudent } = req.params;
-    const { page = 1 } = req.query;
 
     const student = await Student.findByPk(idStudent);
     if (!student) {
@@ -34,10 +33,7 @@ class HelpOrderController {
 
     const helpOrders = await HelpOrder.findAll({
       where: { student_id: idStudent },
-      order: ['created_at'],
-      attributes: ['id', 'question', 'answer', 'answer_at'],
-      limit: 20,
-      offset: (page - 1) * 20,
+      order: [['created_at', 'DESC'], ['answer_at', 'ASC']],
     });
 
     return res.json(helpOrders);

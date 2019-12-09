@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
+import SessionStudentController from './app/controllers/SessionStudentController';
 import StudentController from './app/controllers/StudentController';
 import PlanController from './app/controllers/PlanController';
 import RegistrationController from './app/controllers/RegistrationController';
@@ -27,7 +28,7 @@ const routes = new Router();
 
 routes.post('/users', validateUserStore, UserController.store);
 routes.post('/sessions', validateSessionStore, SessionController.store);
-
+routes.post('/sessions/student/:idStudent', SessionStudentController.store);
 routes.post('/students/:idStudent/checkins', CkeckinController.store);
 routes.get('/students/:idStudent/checkins', CkeckinController.index);
 
@@ -42,7 +43,6 @@ routes.get('/students/:idStudent/help-orders', HelpOrderController.index);
 routes.use(authMiddleware);
 
 routes.put('/users', validateUserUpdate, UserController.update);
-
 routes.post('/students', validateStudentStore, StudentController.store);
 routes.put(
   '/students/:idStudent',

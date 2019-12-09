@@ -43,6 +43,7 @@ class CreateRegistrationService {
     });
 
     await Queue.add(WelcomeMail.key, {
+      studentId: student.id,
       studentName: student.name,
       studentEmail: student.email,
       startDate: start_date,
