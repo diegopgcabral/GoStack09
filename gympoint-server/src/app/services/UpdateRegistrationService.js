@@ -5,8 +5,8 @@ import Plan from '../models/Plan';
 import Registration from '../models/Registration';
 
 class UpdateRegistrationService {
-  async run({ idRegistration, student_id, plan_id, start_date }) {
-    const registration = await Registration.findByPk(idRegistration);
+  async run({ id, student_id, plan_id, start_date }) {
+    const registration = await Registration.findByPk(id);
     if (!registration) {
       throw new Error('ID da matricula não encontrado');
     }

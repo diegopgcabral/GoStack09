@@ -40,10 +40,9 @@ class HelpOrderController {
   }
 
   async update(req, res) {
-    const { idHelpOrder } = req.params;
-    const { answer } = req.body;
+    const { id, answer } = req.body;
 
-    const helpOrder = await HelpOrder.findByPk(idHelpOrder, {
+    const helpOrder = await HelpOrder.findByPk(id, {
       attributes: ['id', 'student_id', 'question', 'answer', 'answer_at'],
       include: [
         {
@@ -55,7 +54,9 @@ class HelpOrderController {
     });
 
     if (!helpOrder) {
-      return res.status(400).json({ error: 'ID HelpOrder não encontrado' });
+      return res
+        .status(400)
+        .json({ error: 'Pedido de auxílio não encontrado' });
     }
 
     await helpOrder.update({

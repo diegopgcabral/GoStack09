@@ -31,9 +31,9 @@ class PlanController {
   }
 
   async update(req, res) {
-    const { idPlan } = req.params;
+    const { id } = req.body;
 
-    const plan = await Plan.findByPk(idPlan);
+    const plan = await Plan.findByPk(id);
     if (!plan) {
       return res.status(400).json({ error: 'Plano não cadastrado' });
     }

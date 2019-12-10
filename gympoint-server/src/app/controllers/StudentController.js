@@ -17,9 +17,9 @@ class StudentController {
   }
 
   async update(req, res) {
-    const { idStudent } = req.params;
+    const { id } = req.body;
 
-    const student = await Student.findByPk(idStudent);
+    const student = await Student.findByPk(id);
     if (!student) {
       return res.status(400).json({ error: 'Aluno não cadastrado' });
     }

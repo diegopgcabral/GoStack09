@@ -22,7 +22,6 @@ class RegistrationController {
     const { page = 1 } = req.query;
 
     const registration = await Registration.findAll({
-      attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
       limit: 20,
       offset: (page - 1) * 20,
       include: [
@@ -46,7 +45,6 @@ class RegistrationController {
 
     const registration = await Registration.findOne({
       where: { id: idRegistration },
-      attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
       include: [
         {
           model: Student,
@@ -64,11 +62,10 @@ class RegistrationController {
   }
 
   async update(req, res) {
-    const { idRegistration } = req.params;
-    const { student_id, plan_id, start_date } = req.body;
+    const { id, student_id, plan_id, start_date } = req.body;
 
     const registrationUpdate = await UpdateRegistrationService.run({
-      idRegistration,
+      id,
       student_id,
       plan_id,
       start_date,

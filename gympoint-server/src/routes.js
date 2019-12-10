@@ -43,12 +43,9 @@ routes.get('/students/:idStudent/help-orders', HelpOrderController.index);
 routes.use(authMiddleware);
 
 routes.put('/users', validateUserUpdate, UserController.update);
+
 routes.post('/students', validateStudentStore, StudentController.store);
-routes.put(
-  '/students/:idStudent',
-  validateStudentUpdate,
-  StudentController.update
-);
+routes.put('/students', validateStudentUpdate, StudentController.update);
 routes.get('/students', StudentController.index);
 routes.get('/students/:idStudent', StudentController.show);
 routes.delete('/students/:idStudent', StudentController.delete);
@@ -56,7 +53,7 @@ routes.delete('/students/:idStudent', StudentController.delete);
 routes.get('/plans', PlanController.index);
 routes.get('/plans/:idPlan', PlanController.show);
 routes.post('/plans', validatePlanStore, PlanController.store);
-routes.put('/plans/:idPlan', validatePlanUpdate, PlanController.update);
+routes.put('/plans', validatePlanUpdate, PlanController.update);
 routes.delete('/plans/:idPlan', PlanController.delete);
 
 routes.post(
@@ -67,7 +64,7 @@ routes.post(
 routes.get('/registrations', RegistrationController.index);
 routes.get('/registrations/:idRegistration', RegistrationController.show);
 routes.put(
-  '/registrations/:idRegistration',
+  '/registrations',
   validateRegistrationUpdate,
   RegistrationController.update
 );
@@ -75,7 +72,7 @@ routes.delete('/registrations/:idRegistration', RegistrationController.delete);
 
 routes.get('/help-orders', AnswerController.index);
 routes.put(
-  '/help-orders/:idHelpOrder/answer',
+  '/help-orders/answer',
   validateHelpOrderUpdate,
   HelpOrderController.update
 );
