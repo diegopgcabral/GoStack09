@@ -18,7 +18,8 @@ export default function ModalHelpOrder({ payload }) {
       setLoading(false);
     } else {
       try {
-        await api.put(`/help-orders/${payload.id}/answer`, {
+        await api.put('/help-orders/answer', {
+          id: payload.id,
           answer: answerHelpOrder,
         });
         toast.success('Pedido de auxílio respondido com sucesso!');

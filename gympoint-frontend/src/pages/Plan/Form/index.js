@@ -53,11 +53,13 @@ export default function FormPlan() {
 
   async function handleEdit({ title, duration, price }) {
     try {
-      await api.put(`plans/${idPlan}`, {
+      await api.put('plans', {
+        id: idPlan,
         title,
         duration,
         price,
       });
+
       toast.success('Dados do plano atualizado com sucesso!');
       history.goBack();
     } catch (err) {
@@ -74,6 +76,7 @@ export default function FormPlan() {
         duration,
         price,
       });
+
       toast.success('Plano cadastrado com sucesso!');
       history.goBack();
     } catch (err) {

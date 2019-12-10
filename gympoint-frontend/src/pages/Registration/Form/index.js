@@ -16,9 +16,11 @@ export default function FormRegistration() {
   const { idRegistration } = useParams();
   const [students, setStudents] = useState([]);
   const [plans, setPlans] = useState([]);
+
   const [dateSelected, setDateSelected] = useState(
-    format(new Date(), 'yyy-MM-dd')
+    format(new Date(), 'yyyy-MM-dd')
   );
+
   const [edit, setEdit] = useState(false);
   const [endDate, setEndDate] = useState();
   const [totalPrice, setTotalPrice] = useState();
@@ -75,7 +77,6 @@ export default function FormRegistration() {
     if (planSelected && plans) {
       // eslint-disable-next-line
       const indexPlan = plans.findIndex(plan => plan.id == planSelected);
-      console.tron.log(indexPlan);
 
       setEndDate(
         format(
@@ -90,7 +91,7 @@ export default function FormRegistration() {
   }, [planSelected, dateSelected]);
 
   async function handleNew() {
-    if (!studentSelected || !planSelected) {
+    if (!studentSelected || !planSelected || !students) {
       toast.warning('Você precisa selecionar aluno e plano!');
     } else {
       await api
@@ -110,11 +111,13 @@ export default function FormRegistration() {
   }
 
   async function handleEdit() {
-    if (!studentSelected || !planSelected) {
+    console.tron.log(dateSelected);
+    if (!studentSelected || !planSelected || !students) {
       toast.warning('Você precisa selecionar aluno e plano!');
     } else {
       await api
-        .put(`registrations/${idRegistration}`, {
+        .put('registrations', {
+          id: idRegistration,
           student_id: studentSelected,
           plan_id: planSelected,
           start_date: dateSelected,

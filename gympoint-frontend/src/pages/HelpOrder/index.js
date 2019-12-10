@@ -23,7 +23,6 @@ export default function HelpOrder() {
 
   useEffect(() => {
     async function loadHelpOrders() {
-      console.tron.log(`loadHelpOrders: ${page}`);
       const response = await api.get('help-orders', {
         params: {
           page,

@@ -47,13 +47,15 @@ export default function FormStudent() {
 
   async function handleEdit({ name, email, age, height, weight }) {
     try {
-      await api.put(`students/${idStudent}`, {
+      await api.put('students', {
+        id: idStudent,
         name,
         email,
         age,
         height,
         weight,
       });
+
       toast.success('Dados do aluno atualizado com sucesso!');
       history.goBack();
     } catch (err) {
