@@ -10,17 +10,12 @@ import { Container, Content } from './styles';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { formatCurrencyBR, moneyMask } from '~/util/format';
+import { formatCurrencyBR, moneyMask, numberMask } from '~/util/format';
 
 const schema = Yup.object().shape({
   title: Yup.string().required('Título do plano é obrigatório'),
-  duration: Yup.number()
-    .positive('Duração deve ser >= 1')
-    .required('Duração é obrigatório'),
-  price: Yup.number()
-    .typeError('Preço deve ser numérico')
-    .positive('Preço deve ser >= 0.1')
-    .required('Preço é obrigatório'),
+  duration: Yup.string().required('Duração do plano é obrigatório'),
+  price: Yup.string().required('Preço do plano é obrigatório'),
 });
 
 export default function FormPlan() {
@@ -80,7 +75,7 @@ export default function FormPlan() {
       toast.success('Plano cadastrado com sucesso!');
       history.goBack();
     } catch (err) {
-      toast.error(`Não foi possível cadastrar o aluno! - Erro: ${err.message}`);
+      toast.error(`Não foi possível cadastrar o plano! - Erro: ${err.message}`);
     }
   }
 
@@ -114,8 +109,7 @@ export default function FormPlan() {
               name="title"
               type="text"
               autoComplete="off"
-              placeholder="Digite o título do plano"
-              value={title || null}
+              value={title || ''}
               onChange={e => setTitle(e.target.value)}
             />
           </div>
@@ -124,20 +118,19 @@ export default function FormPlan() {
               <h3>DURAÇÃO (em meses) </h3>
               <Input
                 name="duration"
-                type="number"
+                type="text"
                 autoComplete="off"
-                placeholder="Digite os meses"
-                value={duration || null}
-                onChange={e => setDuration(e.target.value)}
+                value={duration || ''}
+                onChange={e => setDuration(numberMask(e.target.value))}
               />
             </div>
             <div>
               <h3>PREÇO MENSAL</h3>
               <Input
                 name="price"
+                type="text"
                 autoComplete="off"
-                placeholder="Digite o preço"
-                value={price || null}
+                value={price || ''}
                 onChange={e => setPrice(moneyMask(e.target.value))}
               />
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { format, addMonths, parseISO } from 'date-fns';
 import { toast } from 'react-toastify';
@@ -17,9 +17,7 @@ export default function FormRegistration() {
   const [students, setStudents] = useState([]);
   const [plans, setPlans] = useState([]);
 
-  const [dateSelected, setDateSelected] = useState(
-    format(new Date(), 'yyyy-MM-dd')
-  );
+  const [dateSelected, setDateSelected] = useState();
 
   const [edit, setEdit] = useState(false);
   const [endDate, setEndDate] = useState();
@@ -27,7 +25,7 @@ export default function FormRegistration() {
   const [planSelected, setPlanSelected] = useState();
   const [studentSelected, setStudentSelected] = useState([]);
 
-  async function loadRegistration() {
+  const loadRegistration = useCallback(async () => {
     await api
       .get('students')
       .then(response => {
@@ -43,27 +41,27 @@ export default function FormRegistration() {
           setPlans(response.data);
         })
       );
-  }
-
-  async function loadRegistrationForEdit() {
-    await api.get(`registrations/${idRegistration}`).then(response => {
-      setStudentSelected(response.data.student.id);
-      setDateSelected(format(parseISO(response.data.start_date), 'yyyy-MM-dd'));
-      setPlanSelected(response.data.plan.id);
-    });
-  }
-
-  useEffect(() => {
-    loadRegistration();
 
     if (idRegistration) {
       setEdit(true);
-      loadRegistrationForEdit();
+      await api.get(`registrations/${idRegistration}`).then(response => {
+        setStudentSelected(response.data.student.id);
+        setDateSelected(response.data.start_date);
+        setPlanSelected(response.data.plan.id);
+      });
     }
-    // eslint-disable-next-line
-  }, []);
+  }, [idRegistration]);
 
-  const filterStudents = (inputValue: string) => {
+  const dateSelectedFormatted = useMemo(
+    () => dateSelected && format(parseISO(dateSelected), 'yyyy-MM-dd'),
+    [dateSelected]
+  );
+
+  useEffect(() => {
+    loadRegistration();
+  }, [loadRegistration]);
+
+  const filterStudents = inputValue => {
     return students.filter(i =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
@@ -78,12 +76,14 @@ export default function FormRegistration() {
       // eslint-disable-next-line
       const indexPlan = plans.findIndex(plan => plan.id == planSelected);
 
-      setEndDate(
-        format(
-          addMonths(new Date(dateSelected), plans[indexPlan].duration),
-          'dd/MM/yyyy'
-        )
-      );
+      if (dateSelected) {
+        setEndDate(
+          format(
+            addMonths(parseISO(dateSelected), plans[indexPlan].duration),
+            'dd/MM/yyyy'
+          )
+        );
+      }
 
       setTotalPrice(plans[indexPlan].price * plans[indexPlan].duration);
     }
@@ -91,27 +91,29 @@ export default function FormRegistration() {
   }, [planSelected, dateSelected]);
 
   async function handleNew() {
-    if (!studentSelected || !planSelected || !students) {
-      toast.warning('Você precisa selecionar aluno e plano!');
+    if (!studentSelected || !planSelected || !students || !dateSelected) {
+      toast.warning('Você precisa selecionar aluno, plano e data início!');
     } else {
       await api
         .post('registrations', {
           student_id: studentSelected,
           plan_id: planSelected,
-          start_date: dateSelected,
+          start_date: parseISO(dateSelected),
         })
         .then(() => {
           toast.success('Matrícula ativada com sucesso!');
           history.goBack();
         })
         .catch(error => {
-          toast.error('Aluno já possui uma matrícula ativa!');
+          console.tron.log(error);
+          toast.error(
+            `Não foi possível cadastrar a matrícula! - Erro: ${error.message}`
+          );
         });
     }
   }
 
   async function handleEdit() {
-    console.tron.log(dateSelected);
     if (!studentSelected || !planSelected || !students) {
       toast.warning('Você precisa selecionar aluno e plano!');
     } else {
@@ -120,14 +122,16 @@ export default function FormRegistration() {
           id: idRegistration,
           student_id: studentSelected,
           plan_id: planSelected,
-          start_date: dateSelected,
+          start_date: parseISO(dateSelected),
         })
         .then(() => {
           toast.success('Matrícula atualizada com sucesso!');
           history.goBack();
         })
         .catch(error => {
-          toast.error('Erro ao atualizar a matrícula do aluno');
+          toast.error(
+            `Não foi possível atualizar a matrícula! - Erro: ${error.message}`
+          );
         });
     }
   }
@@ -190,8 +194,8 @@ export default function FormRegistration() {
               <Input
                 name="startDate"
                 type="date"
+                value={edit ? dateSelectedFormatted : dateSelected}
                 onChange={e => setDateSelected(e.target.value)}
-                value={dateSelected}
               />
             </div>
             <div>

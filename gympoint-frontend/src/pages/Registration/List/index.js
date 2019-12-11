@@ -17,6 +17,7 @@ export default function Registration() {
 
   const handlePagination = useCallback(async () => {
     const response = await api.get(`registrations?page=${page + 1}`);
+
     if (response.data.length > 0) {
       setHasNextPage(true);
     } else {

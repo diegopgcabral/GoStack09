@@ -9,23 +9,16 @@ import { Container, Content } from './styles';
 
 import history from '~/services/history';
 import api from '~/services/api';
-import { decimalMask } from '~/util/format';
+import { numberMask, decimalMask } from '~/util/format';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório'),
   email: Yup.string()
     .email('Informe um e-mail válido')
     .required('E-mail é obrigatório'),
-  age: Yup.number('Somente Números')
-    .positive('Idade Inválida')
-    .required('Idade é obrigatória'),
-  weight: Yup.number('Somente Números')
-    .positive('Peso Inválido')
-    .required('Peso é obrigatório'),
-  height: Yup.number('Somente Números')
-    .typeError('Altura deve ser numérico')
-    .positive('Altura Inválida')
-    .required('Altura é obrigatória'),
+  age: Yup.string().required('Idade é obrigatória'),
+  weight: Yup.string().required('Peso é obrigatório'),
+  height: Yup.string().required('Altura é obrigatória'),
 });
 
 export default function FormStudent() {
@@ -58,9 +51,9 @@ export default function FormStudent() {
 
       toast.success('Dados do aluno atualizado com sucesso!');
       history.goBack();
-    } catch (err) {
+    } catch (error) {
       toast.error(
-        `Não foi possível atualizar os dados do aluno! - Erro: ${err.message}`
+        `Não foi possível atualizar os dados do aluno! - Erro: ${error.message}`
       );
     }
   }
@@ -76,8 +69,10 @@ export default function FormStudent() {
       });
       toast.success('Aluno cadastrado com sucesso!');
       history.goBack();
-    } catch (err) {
-      toast.error(`Não foi possível cadastrar o aluno! - Erro: ${err.message}`);
+    } catch (error) {
+      toast.error(
+        `Não foi possível cadastrar o aluno! - Erro: ${error.message}`
+      );
     }
   }
 
@@ -113,7 +108,7 @@ export default function FormStudent() {
               type="text"
               autoComplete="off"
               placeholder="Digite seu nome completo"
-              value={student ? student.name : null}
+              value={student ? student.name : ''}
               onChange={e => setStudent({ ...student, name: e.target.value })}
             />
           </div>
@@ -124,7 +119,7 @@ export default function FormStudent() {
               type="email"
               autoComplete="off"
               placeholder="Digite seu endereço de e-mail"
-              value={student ? student.email : null}
+              value={student ? student.email : ''}
               onChange={e => setStudent({ ...student, email: e.target.value })}
             />
           </div>
@@ -133,11 +128,12 @@ export default function FormStudent() {
               <h3>IDADE </h3>
               <Input
                 name="age"
-                type="number"
+                type="text"
                 autoComplete="off"
-                placeholder="Digite sua idade"
-                value={student ? student.age : null}
-                onChange={e => setStudent({ ...student, age: e.target.value })}
+                value={student ? student.age : ''}
+                onChange={e =>
+                  setStudent({ ...student, age: numberMask(e.target.value) })
+                }
               />
             </div>
             <div>
@@ -146,8 +142,7 @@ export default function FormStudent() {
                 name="weight"
                 type="text"
                 autoComplete="off"
-                placeholder="Digite seu peso"
-                value={student ? student.weight : null}
+                value={student ? student.weight : ''}
                 onChange={e =>
                   setStudent({
                     ...student,
@@ -162,8 +157,7 @@ export default function FormStudent() {
                 name="height"
                 type="text"
                 autoComplete="off"
-                placeholder="Digite sua altura"
-                value={student ? student.height : null}
+                value={student ? student.height : ''}
                 onChange={e =>
                   setStudent({
                     ...student,
