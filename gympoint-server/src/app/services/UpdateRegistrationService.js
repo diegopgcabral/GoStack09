@@ -25,9 +25,8 @@ class UpdateRegistrationService {
       }
     }
 
-    const dateNow = new Date();
     if (start_date && start_date !== registration.start_date) {
-      if (isBefore(parseISO(start_date), parseISO(dateNow))) {
+      if (isBefore(parseISO(start_date), new Date())) {
         throw new Error('Não é permitido usar datas passadas');
       }
     }

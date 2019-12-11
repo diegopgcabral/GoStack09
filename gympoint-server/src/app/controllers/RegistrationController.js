@@ -36,6 +36,7 @@ class RegistrationController {
           attributes: ['id', 'title'],
         },
       ],
+      order: ['start_date'],
     });
     return res.json(registration);
   }

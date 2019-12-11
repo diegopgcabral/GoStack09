@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
 import Youch from 'youch';
 import * as Sentry from '@sentry/node';
 import 'express-async-errors';
@@ -39,7 +38,7 @@ class App {
 
         return res.status(500).json(errors);
       }
-      return res.status(500).json({ error: 'Internal server error' });
+      return res.status(500).json({ erro: 'Internal server error.' });
     });
   }
 }
