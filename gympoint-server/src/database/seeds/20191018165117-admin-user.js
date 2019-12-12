@@ -12,6 +12,13 @@ module.exports = {
           created_at: new Date(),
           updated_at: new Date(),
         },
+        {
+          name: 'Recepção',
+          email: 'recepcao@gympoint.com',
+          password_hash: bcrypt.hashSync('123456', 8),
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
       ],
       {}
     );
