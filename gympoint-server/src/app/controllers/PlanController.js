@@ -38,6 +38,15 @@ class PlanController {
       return res.status(400).json({ error: 'Plano não cadastrado' });
     }
 
+    if (plan.title !== req.body.title) {
+      const checkTitlePlan = await Plan.findOne({
+        where: { title: req.body.title },
+      });
+      if (checkTitlePlan) {
+        return res.status(400).json({ error: 'Plano já cadastrado' });
+      }
+    }
+
     await plan.update(req.body);
     return res.json(plan);
   }

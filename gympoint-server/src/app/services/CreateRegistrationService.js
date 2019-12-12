@@ -9,7 +9,7 @@ import Queue from '../../lib/Queue';
 
 class CreateRegistrationService {
   async run({ start_date, student_id, plan_id }) {
-    if (isBefore(parseISO(start_date), parseISO(new Date()))) {
+    if (isBefore(parseISO(start_date), new Date())) {
       throw new Error('Não é permitido fazer matricula em data passada');
     }
 
@@ -31,14 +31,14 @@ class CreateRegistrationService {
       throw new Error('Plano não encontrado');
     }
 
-    const end_date = addMonths(parseISO(start_date), plan.duration);
+    const endDate = addMonths(parseISO(start_date), plan.duration);
     const price = plan.price * plan.duration;
 
     const registration = await Registration.create({
-      start_date,
       student_id,
       plan_id,
-      end_date,
+      start_date,
+      end_date: endDate,
       price,
     });
 
@@ -47,7 +47,7 @@ class CreateRegistrationService {
       studentName: student.name,
       studentEmail: student.email,
       startDate: start_date,
-      end_date,
+      endDate,
       plan: plan.title,
       price,
     });
