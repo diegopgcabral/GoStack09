@@ -26,7 +26,7 @@ class UpdateRegistrationService {
     }
 
     if (start_date && start_date !== registration.start_date) {
-      if (isBefore(parseISO(start_date), new Date())) {
+      if (isBefore(parseISO(start_date), parseISO(new Date()))) {
         throw new Error('Não é permitido usar datas passadas');
       }
     }

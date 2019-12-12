@@ -9,7 +9,7 @@ import Queue from '../../lib/Queue';
 
 class CreateRegistrationService {
   async run({ start_date, student_id, plan_id }) {
-    if (isBefore(parseISO(start_date), new Date())) {
+    if (isBefore(parseISO(start_date), parseISO(new Date()))) {
       throw new Error('Não é permitido fazer matricula em data passada');
     }
 

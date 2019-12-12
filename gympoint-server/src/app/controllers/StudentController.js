@@ -24,6 +24,14 @@ class StudentController {
       return res.status(400).json({ error: 'Aluno não cadastrado' });
     }
 
+    const checkStudentEmail = await Student.findOne({
+      where: { email: req.body.email },
+    });
+
+    if (checkStudentEmail) {
+      return res.status(400).json({ error: 'E-mail já cadastrado' });
+    }
+
     const { name, email, age, height, weight } = await student.update(req.body);
     return res.json({
       name,
