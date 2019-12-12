@@ -49,11 +49,11 @@ export default function FormStudent() {
         weight,
       });
 
-      toast.success('Dados do aluno atualizado com sucesso!');
+      toast.success('Aluno atualizado com sucesso!');
       history.goBack();
-    } catch (error) {
+    } catch (err) {
       toast.error(
-        `Não foi possível atualizar os dados do aluno! - Erro: ${error.message}`
+        `Não foi possível atualizar os dados do aluno! ${err.response.data.error}`
       );
     }
   }
@@ -69,9 +69,9 @@ export default function FormStudent() {
       });
       toast.success('Aluno cadastrado com sucesso!');
       history.goBack();
-    } catch (error) {
+    } catch (err) {
       toast.error(
-        `Não foi possível cadastrar o aluno! - Erro: ${error.message}`
+        `Não foi possível cadastrar o aluno! ${err.response.data.error}`
       );
     }
   }

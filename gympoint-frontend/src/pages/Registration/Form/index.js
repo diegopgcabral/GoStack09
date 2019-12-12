@@ -94,22 +94,19 @@ export default function FormRegistration() {
     if (!studentSelected || !planSelected || !students || !dateSelected) {
       toast.warning('Você precisa selecionar aluno, plano e data início!');
     } else {
-      await api
-        .post('registrations', {
+      try {
+        await api.post('registrations', {
           student_id: studentSelected,
           plan_id: planSelected,
           start_date: parseISO(dateSelected),
-        })
-        .then(() => {
-          toast.success('Matrícula ativada com sucesso!');
-          history.goBack();
-        })
-        .catch(error => {
-          console.tron.log(error);
-          toast.error(
-            `Não foi possível cadastrar a matrícula! - Erro: ${error.message}`
-          );
         });
+        toast.success('Matrícula ativada com sucesso!');
+        history.goBack();
+      } catch (err) {
+        toast.error(
+          `Não foi possível ativar a matrícula! ${err.response.data.error.message}`
+        );
+      }
     }
   }
 
@@ -117,22 +114,20 @@ export default function FormRegistration() {
     if (!studentSelected || !planSelected || !students) {
       toast.warning('Você precisa selecionar aluno e plano!');
     } else {
-      await api
-        .put('registrations', {
+      try {
+        await api.put('registrations', {
           id: idRegistration,
           student_id: studentSelected,
           plan_id: planSelected,
           start_date: parseISO(dateSelected),
-        })
-        .then(() => {
-          toast.success('Matrícula atualizada com sucesso!');
-          history.goBack();
-        })
-        .catch(error => {
-          toast.error(
-            `Não foi possível atualizar a matrícula! - Erro: ${error.message}`
-          );
         });
+        toast.success('Matrícula atualizada com sucesso!');
+        history.goBack();
+      } catch (err) {
+        toast.error(
+          `Não foi possível atualizar a matrícula! ${err.response.data.error.message}`
+        );
+      }
     }
   }
 

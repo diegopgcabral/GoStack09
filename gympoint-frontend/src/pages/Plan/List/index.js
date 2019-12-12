@@ -47,7 +47,7 @@ export default function Plan() {
         toast.success('Plano excluido com sucesso!');
       } catch (err) {
         toast.error(
-          `Não foi possível excluir o plano selecionado - Erro: ${err.message}`
+          `Não foi possível excluir o plano! ${err.response.data.error}`
         );
       }
     }
@@ -88,7 +88,7 @@ export default function Plan() {
               </thead>
               <tbody>
                 {plans.map(plan => (
-                  <tr>
+                  <tr key={plan.id}>
                     <td>{plan.title}</td>
                     <td align="center">
                       {plan.duration > 1

@@ -29,7 +29,7 @@ export default function ModalHelpOrder({ payload }) {
         }, 2000);
       } catch (err) {
         toast.error(
-          `Não foi possível responder o pedido de auxílio. Erro: ${err.message}`
+          `Não foi possível responder o pedido de auxílio! ${err.response.data.error}`
         );
       }
     }

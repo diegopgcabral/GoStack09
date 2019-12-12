@@ -55,11 +55,11 @@ export default function FormPlan() {
         price,
       });
 
-      toast.success('Dados do plano atualizado com sucesso!');
+      toast.success('Plano atualizado com sucesso!');
       history.goBack();
     } catch (err) {
       toast.error(
-        `Não foi possível atualizar os dados do plano! - Erro: ${err.message}`
+        `Não foi possível atualizar o plano! ${err.response.data.error}`
       );
     }
   }
@@ -75,13 +75,16 @@ export default function FormPlan() {
       toast.success('Plano cadastrado com sucesso!');
       history.goBack();
     } catch (err) {
-      toast.error(`Não foi possível cadastrar o plano! - Erro: ${err.message}`);
+      toast.error(
+        `Não foi possível cadastrar o plano! ${err.response.data.error}`
+      );
     }
   }
 
   function handleReturn() {
     history.goBack();
   }
+
   return (
     <Container>
       <header>

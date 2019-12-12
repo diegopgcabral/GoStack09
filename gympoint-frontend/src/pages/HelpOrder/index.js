@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-
 import { Container, Content, Pagination } from './styles';
 
 import api from '~/services/api';
@@ -68,7 +67,7 @@ export default function HelpOrder() {
                 </thead>
                 <tbody>
                   {helpOrders.map(helpOrder => (
-                    <tr>
+                    <tr key={helpOrder.id}>
                       <td>{helpOrder.student.name}</td>
                       <td>
                         <button

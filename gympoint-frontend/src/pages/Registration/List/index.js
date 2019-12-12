@@ -65,7 +65,7 @@ export default function Registration() {
         toast.success('Matrícula excluida com sucesso!');
       } catch (err) {
         toast.error(
-          `Não foi possível excluir a matrícula! - Erro: ${err.message}`
+          `Não foi possível excluir a matrícula! ${err.response.data.error}`
         );
       }
     }
@@ -107,7 +107,7 @@ export default function Registration() {
               </thead>
               <tbody>
                 {registrations.map(registration => (
-                  <tr>
+                  <tr key={registration.id}>
                     <td>{registration.student.name}</td>
                     <td align="center">{registration.plan.title}</td>
                     <td align="center">{registration.formattedStartDate}</td>

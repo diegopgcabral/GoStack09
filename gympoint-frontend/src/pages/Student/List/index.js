@@ -48,7 +48,9 @@ export default function Student() {
         setStudents(newList);
         toast.success('Aluno excluido com sucesso!');
       } catch (err) {
-        toast.error(`Não foi possível excluir o aluno! - Erro: ${err.message}`);
+        toast.error(
+          `Não foi possível excluir o aluno! - ${err.response.data.error}`
+        );
       }
     }
   }
@@ -97,7 +99,7 @@ export default function Student() {
               </thead>
               <tbody>
                 {students.map(student => (
-                  <tr>
+                  <tr key={student.id}>
                     <td>{student.name}</td>
                     <td>{student.email}</td>
                     <td align="center">{student.age}</td>
