@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Alert } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -31,8 +32,14 @@ export default function NewQuestion({ navigation }) {
           value={question}
           onChangeText={setQuestion}
         />
-        <ButtonQuestion onPress={HandleQuestion}>Enviar Pedido</ButtonQuestion>
+        <ButtonQuestion onPress={HandleQuestion}>Enviar pedido</ButtonQuestion>
       </Container>
     </>
   );
 }
+
+NewQuestion.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

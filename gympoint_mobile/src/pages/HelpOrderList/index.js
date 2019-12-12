@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { formatRelative, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -80,5 +81,12 @@ function HelpOrderList({ navigation, isFocused }) {
     </>
   );
 }
+
+HelpOrderList.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+  isFocused: PropTypes.bool.isRequired,
+};
 
 export default withNavigationFocus(HelpOrderList);

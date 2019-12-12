@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -97,9 +98,15 @@ export default function Checkin() {
   );
 }
 
+const tabBarIcon = ({ tintColor }) => (
+  <Icon name="edit-location" size={20} color={tintColor} />
+);
+
+tabBarIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
+};
+
 Checkin.navigationOptions = {
-  tabBarLaber: 'Check-ins',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="edit-location" size={20} color={tintColor} />
-  ),
+  tabBarLabel: 'Check-ins',
+  tabBarIcon,
 };
