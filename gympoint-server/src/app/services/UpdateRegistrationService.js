@@ -33,14 +33,14 @@ class UpdateRegistrationService {
 
     const plan = await Plan.findByPk(plan_id);
     const endDate = addMonths(parseISO(start_date), plan.duration);
-    const TotalPrice = plan.price * plan.duration;
+    const price = plan.price * plan.duration;
 
     const registrationUpdate = await registration.update({
       student_id,
       plan_id,
       start_date,
       end_date: endDate,
-      price: TotalPrice,
+      price,
     });
 
     return registrationUpdate;

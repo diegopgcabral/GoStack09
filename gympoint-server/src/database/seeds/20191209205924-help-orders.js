@@ -59,14 +59,6 @@ module.exports = {
           created_at: new Date(),
           updated_at: new Date(),
         },
-        {
-          student_id: 4,
-          question: 'Que exercício devo fazer para perder a barriga?',
-          answer: null,
-          answer_at: null,
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
       ],
       {}
     );
