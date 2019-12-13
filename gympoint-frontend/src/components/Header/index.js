@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink, Link, useRouteMatch } from 'react-router-dom';
 
 import { signOut } from '~/store/modules/auth/actions';
 
@@ -11,11 +11,14 @@ import { Container, Content, Profile } from './styles';
 export default function Header() {
   const profile = useSelector(state => state.user.profile);
   const dispatch = useDispatch();
+  const { path } = useRouteMatch();
 
   function handleSignOut() {
     dispatch(signOut());
   }
 
+  const teste = path.indexOf('students');
+  console.tron.log(teste);
   return (
     <Container>
       <Content>
@@ -26,16 +29,24 @@ export default function Header() {
 
           <ul>
             <li>
-              <Link to="/students">ALUNOS</Link>
+              <NavLink exact activeClassName="active" to="/students">
+                ALUNOS
+              </NavLink>
             </li>
             <li>
-              <Link to="/plans">PLANOS</Link>
+              <NavLink exact activeClassName="active" to="/plans">
+                PLANOS
+              </NavLink>
             </li>
             <li>
-              <Link to="/registrations">MATRÍCULAS</Link>
+              <NavLink exact activeClassName="active" to="/registrations">
+                MATRÍCULAS
+              </NavLink>
             </li>
             <li>
-              <Link to="/help-orders">PEDIDOS DE AUXÍLIO</Link>
+              <NavLink exact activeClassName="active" to="/help-orders">
+                PEDIDOS DE AUXÍLIO
+              </NavLink>
             </li>
           </ul>
         </nav>

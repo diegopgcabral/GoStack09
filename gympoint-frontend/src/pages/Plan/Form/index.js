@@ -57,9 +57,9 @@ export default function FormPlan() {
 
       toast.success('Plano atualizado com sucesso!');
       history.goBack();
-    } catch (err) {
+    } catch (_err) {
       toast.error(
-        `Não foi possível atualizar o plano! ${err.response.data.error}`
+        `Não foi possível atualizar o plano! ${_err.response.data.error}`
       );
     }
   }
@@ -74,9 +74,9 @@ export default function FormPlan() {
 
       toast.success('Plano cadastrado com sucesso!');
       history.goBack();
-    } catch (err) {
+    } catch (_err) {
       toast.error(
-        `Não foi possível cadastrar o plano! ${err.response.data.error}`
+        `Não foi possível cadastrar o plano! ${_err.response.data.error}`
       );
     }
   }

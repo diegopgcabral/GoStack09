@@ -102,9 +102,9 @@ export default function FormRegistration() {
         });
         toast.success('Matrícula ativada com sucesso!');
         history.goBack();
-      } catch (err) {
+      } catch (_err) {
         toast.error(
-          `Não foi possível ativar a matrícula! ${err.response.data.error.message}`
+          `Não foi possível ativar a matrícula! ${_err.response.data.error.message}`
         );
       }
     }
@@ -123,9 +123,9 @@ export default function FormRegistration() {
         });
         toast.success('Matrícula atualizada com sucesso!');
         history.goBack();
-      } catch (err) {
+      } catch (_err) {
         toast.error(
-          `Não foi possível atualizar a matrícula! ${err.response.data.error.message}`
+          `Não foi possível atualizar a matrícula! ${_err.response.data.error.message}`
         );
       }
     }

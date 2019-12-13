@@ -27,9 +27,9 @@ export default function ModalHelpOrder({ payload }) {
         setTimeout(() => {
           window.location.reload();
         }, 2000);
-      } catch (err) {
+      } catch (_err) {
         toast.error(
-          `Não foi possível responder o pedido de auxílio! ${err.response.data.error}`
+          `Não foi possível responder o pedido de auxílio! ${_err.response.data.error}`
         );
       }
     }

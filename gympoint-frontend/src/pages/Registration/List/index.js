@@ -63,9 +63,9 @@ export default function Registration() {
         const newList = registrations.filter(item => item.id !== id);
         setRegistrations(newList);
         toast.success('Matrícula excluida com sucesso!');
-      } catch (err) {
+      } catch (_err) {
         toast.error(
-          `Não foi possível excluir a matrícula! ${err.response.data.error}`
+          `Não foi possível excluir a matrícula! ${_err.response.data.error}`
         );
       }
     }

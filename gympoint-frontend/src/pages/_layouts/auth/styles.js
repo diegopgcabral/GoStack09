@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
   width: 100%;
   max-width: 360px;
-  height: 480px;
+  height: 448px;
   text-align: center;
   background: #ffffff;
   border-radius: 4px;

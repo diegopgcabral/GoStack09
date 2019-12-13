@@ -40,6 +40,10 @@ export const Content = styled.div`
     a {
       font-weight: bold;
       color: #999999;
+      transition: color cubic-bezier(0.77, 0, 0.175, 1) 0.3s;
+      &.active {
+        color: #ee4d64;
+      }
     }
   }
 

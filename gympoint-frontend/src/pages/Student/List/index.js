@@ -47,9 +47,9 @@ export default function Student() {
         const newList = students.filter(item => item.id !== id);
         setStudents(newList);
         toast.success('Aluno excluido com sucesso!');
-      } catch (err) {
+      } catch (_err) {
         toast.error(
-          `Não foi possível excluir o aluno! - ${err.response.data.error}`
+          `Não foi possível excluir o aluno! ${_err.response.data.error}`
         );
       }
     }

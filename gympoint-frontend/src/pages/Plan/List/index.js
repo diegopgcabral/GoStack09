@@ -45,9 +45,9 @@ export default function Plan() {
         setPlans(newList);
 
         toast.success('Plano excluido com sucesso!');
-      } catch (err) {
+      } catch (_err) {
         toast.error(
-          `Não foi possível excluir o plano! ${err.response.data.error}`
+          `Não foi possível excluir o plano! ${_err.response.data.error}`
         );
       }
     }
