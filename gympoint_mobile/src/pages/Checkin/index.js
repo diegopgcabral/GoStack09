@@ -62,7 +62,7 @@ export default function Checkin() {
           }
         ),
       };
-
+      Alert.alert('Sucesso', 'Check-in realizado com sucesso!');
       setCheckins([data, ...checkins]);
       loadCheckins();
     } catch (err) {

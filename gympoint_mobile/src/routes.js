@@ -2,33 +2,14 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
-
-import { useDispatch } from 'react-redux';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SignIn from '~/pages/SignIn';
-
 import Checkin from '~/pages/Checkin';
-
 import HelpOrderList from '~/pages/HelpOrderList';
 import HelpOrderDetail from '~/pages/HelpOrderDetail';
 import HelpOrderQuestion from '~/pages/HelpOrderQuestion';
-
-import { signOut } from '~/store/modules/auth/actions';
-
-function Logout() {
-  const dispatch = useDispatch();
-  dispatch(signOut());
-  return SignIn;
-}
-
-Logout.navigationOptions = {
-  tabBarLabel: 'Sair',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="compare-arrows" size={20} color={tintColor} />
-  ),
-};
+import Logout from '~/pages/Profile';
 
 export default (isSigned = false) =>
   createAppContainer(
@@ -58,7 +39,6 @@ export default (isSigned = false) =>
                 }
               ),
               navigationOptions: {
-                tabBarVisible: true,
                 tabBarLabel: 'Pedir Ajuda',
                 tabBarIcon: ({ tintColor }) => (
                   <Icon name="live-help" size={20} color={tintColor} />

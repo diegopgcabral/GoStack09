@@ -12,7 +12,9 @@ export const CheckinButton = styled(Button)`
   width: 90%;
 `;
 
-export const CheckinList = styled.FlatList`
+export const CheckinList = styled.FlatList.attrs({
+  showsVerticalScrollIndicator: false,
+})`
   width: 90%;
 `;
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { TouchableOpacity } from 'react-native';
 import { formatRelative, parseISO } from 'date-fns';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import pt from 'date-fns/locale/pt';
 
 import {
@@ -54,6 +56,18 @@ export default function OrderDetail({ navigation }) {
     </>
   );
 }
+
+OrderDetail.navigationOptions = ({ navigation }) => ({
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.goBack();
+      }}
+    >
+      <Icon name="chevron-left" size={30} color="#ee4e62" />
+    </TouchableOpacity>
+  ),
+});
 
 OrderDetail.propTypes = {
   navigation: PropTypes.shape({
