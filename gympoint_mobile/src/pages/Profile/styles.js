@@ -8,7 +8,7 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
   margin-top: 35px;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   color: #ee4e62;
 `;
@@ -19,12 +19,13 @@ export const Info = styled.View`
 `;
 
 export const Name = styled.Text`
+  margin-bottom: 5px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
   color: #666666;
 `;
 export const Email = styled.Text`
-  font-size: 13px;
+  font-size: 14px;
   color: #555555;
 `;
 
