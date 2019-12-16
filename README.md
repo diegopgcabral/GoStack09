@@ -9,7 +9,7 @@ Back-end(Node.js) / Front-end (ReactJs) / Mobile (React Native) - GoStack Bootca
 </h5>
 
 ## Sobre o desafio
-A aplicação é um gerenciador de academia, o <strong>Gympoint</strong>
+A aplicação é um gerenciador de academia, o <strong>Gympoint</strong> onde a parte WEB é toda voltada para o controle da academia. Os alunos só terão acesso ao MOBILE para realizar o seu check-in e solicitar algum tipo de auxílio para a Gympoint.
 
 ## :gear: Back-end
 
