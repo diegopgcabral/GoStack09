@@ -9,10 +9,6 @@ import Queue from '../../lib/Queue';
 
 class CreateRegistrationService {
   async run({ start_date, student_id, plan_id }) {
-    // if (isBefore(parseISO(start_date), new Date())) {
-    //   throw new Error('Não é permitido fazer matricula em data passada');
-    // }
-
     const student = await Student.findByPk(student_id);
     if (!student) {
       throw new Error('Aluno não encontrado');
