@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, Link, useRouteMatch } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import { signOut } from '~/store/modules/auth/actions';
 
@@ -11,14 +11,11 @@ import { Container, Content, Profile } from './styles';
 export default function Header() {
   const profile = useSelector(state => state.user.profile);
   const dispatch = useDispatch();
-  const { path } = useRouteMatch();
 
   function handleSignOut() {
     dispatch(signOut());
   }
 
-  const teste = path.indexOf('students');
-  console.tron.log(teste);
   return (
     <Container>
       <Content>
