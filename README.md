@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/davidfaria/gympoint-backend/master/.github/logo.png">
 </h1>
 <h3 align="center">
-Back-end Node.js - GoStack Bootcamp <a href="https://rocketseat.com.br" target="__blank">Rocketseat</a>
+Back-end Node.js / Front-end ReactJs / Mobile React Native - GoStack Bootcamp <a href="https://rocketseat.com.br" target="__blank">Rocketseat</a>
 </h3>
 
 ## :gear: Back-end
