@@ -8,7 +8,7 @@
 Back-end(Node.js) / Front-end (ReactJs) / Mobile (React Native) - GoStack Bootcamp <a href="https://rocketseat.com.br" target="__blank">Rocketseat</a>
 </h5>
 
-# Sobre o desafio
+## Sobre o desafio
 A aplicação é um gerenciador de academia, o <strong>Gympoint</strong>
 
 ## :gear: Back-end
