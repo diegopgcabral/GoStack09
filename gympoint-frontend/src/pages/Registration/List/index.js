@@ -9,10 +9,12 @@ import { Container, Content, Pagination } from './styles';
 
 import api from '~/services/api';
 import NoResult from '~/components/NoResult';
+import Loading from '~/components/Loading';
 
 export default function Registration() {
   const [registrations, setRegistrations] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
 
   const handlePagination = useCallback(async () => {
@@ -27,6 +29,7 @@ export default function Registration() {
 
   useEffect(() => {
     async function loadRegistrations() {
+      setLoading(true);
       const response = await api.get('registrations', {
         params: {
           page,
@@ -51,6 +54,7 @@ export default function Registration() {
       });
 
       setRegistrations(data);
+      setLoading(false);
     }
     loadRegistrations();
     handlePagination();
@@ -90,53 +94,62 @@ export default function Registration() {
           </Link>
         </aside>
       </header>
-      <Content>
-        {registrations.length === 0 ? (
-          <NoResult />
-        ) : (
-          <>
-            <table>
-              <thead>
-                <tr>
-                  <th>ALUNO</th>
-                  <th align="center">PLANO</th>
-                  <th align="center">INÍCIO</th>
-                  <th align="center">TÉRMINO</th>
-                  <th align="center">ATIVA</th>
-                </tr>
-              </thead>
-              <tbody>
-                {registrations.map(registration => (
-                  <tr key={registration.id}>
-                    <td>{registration.student.name}</td>
-                    <td align="center">{registration.plan.title}</td>
-                    <td align="center">{registration.formattedStartDate}</td>
-                    <td align="center">{registration.formattedEndDate}</td>
-                    <td align="center">
-                      <MdCheckCircle
-                        fontSize={20}
-                        color={registration.active ? '#42cb59' : '#999'}
-                      />
-                    </td>
-                    <td>
-                      <Link to={`registrations/form/${registration.id}`}>
-                        editar
-                      </Link>
-                      <button
-                        className="btnDelete"
-                        type="button"
-                        onClick={() => handleDelete(registration.id)}
-                      >
-                        apagar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-      </Content>
+
+      {loading ? (
+        <Loading>Carregando...</Loading>
+      ) : (
+        <>
+          <Content>
+            {registrations.length === 0 ? (
+              <NoResult />
+            ) : (
+              <>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ALUNO</th>
+                      <th align="center">PLANO</th>
+                      <th align="center">INÍCIO</th>
+                      <th align="center">TÉRMINO</th>
+                      <th align="center">ATIVA</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {registrations.map(registration => (
+                      <tr key={registration.id}>
+                        <td>{registration.student.name}</td>
+                        <td align="center">{registration.plan.title}</td>
+                        <td align="center">
+                          {registration.formattedStartDate}
+                        </td>
+                        <td align="center">{registration.formattedEndDate}</td>
+                        <td align="center">
+                          <MdCheckCircle
+                            fontSize={20}
+                            color={registration.active ? '#42cb59' : '#999'}
+                          />
+                        </td>
+                        <td>
+                          <Link to={`registrations/form/${registration.id}`}>
+                            editar
+                          </Link>
+                          <button
+                            className="btnDelete"
+                            type="button"
+                            onClick={() => handleDelete(registration.id)}
+                          >
+                            apagar
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
+          </Content>
+        </>
+      )}
 
       {(hasNextPage || page > 1) && (
         <Pagination>

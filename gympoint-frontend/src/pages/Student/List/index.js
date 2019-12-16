@@ -8,11 +8,13 @@ import { Container, Content, Pagination } from './styles';
 
 import api from '~/services/api';
 import NoResult from '~/components/NoResult';
+import Loading from '~/components/Loading';
 
 export default function Student() {
   const [searchStudent, setSearchStudent] = useState('');
   const [students, setStudents] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
 
   const handlePagination = useCallback(async () => {
@@ -26,6 +28,7 @@ export default function Student() {
 
   useEffect(() => {
     async function searchStudents() {
+      setLoading(true);
       const response = await api.get('students', {
         params: {
           name: searchStudent,
@@ -34,6 +37,7 @@ export default function Student() {
       });
 
       setStudents(response.data);
+      setLoading(false);
     }
 
     searchStudents();
@@ -84,42 +88,52 @@ export default function Student() {
           </div>
         </aside>
       </header>
-      <Content>
-        {students.length === 0 ? (
-          <NoResult />
-        ) : (
-          <>
-            <table>
-              <thead>
-                <tr>
-                  <th align="left">NOME</th>
-                  <th align="left">E-MAIL</th>
-                  <th align="center">IDADE</th>
-                </tr>
-              </thead>
-              <tbody>
-                {students.map(student => (
-                  <tr key={student.id}>
-                    <td>{student.name}</td>
-                    <td>{student.email}</td>
-                    <td align="center">{student.age}</td>
-                    <td>
-                      <Link to={`/students/form/${student.id}`}>editar</Link>
-                      <button
-                        className="btnDelete"
-                        type="button"
-                        onClick={() => handleDelete(student.id)}
-                      >
-                        apagar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-      </Content>
+
+      {loading ? (
+        <Loading>Carregando...</Loading>
+      ) : (
+        <>
+          <Content>
+            {students.length === 0 ? (
+              <NoResult />
+            ) : (
+              <>
+                <table>
+                  <thead>
+                    <tr>
+                      <th align="left">NOME</th>
+                      <th align="left">E-MAIL</th>
+                      <th align="center">IDADE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {students.map(student => (
+                      <tr key={student.id}>
+                        <td>{student.name}</td>
+                        <td>{student.email}</td>
+                        <td align="center">{student.age}</td>
+                        <td>
+                          <Link to={`/students/form/${student.id}`}>
+                            editar
+                          </Link>
+                          <button
+                            className="btnDelete"
+                            type="button"
+                            onClick={() => handleDelete(student.id)}
+                          >
+                            apagar
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
+          </Content>
+        </>
+      )}
+
       {(hasNextPage || page > 1) && (
         <Pagination>
           {page > 1 && (

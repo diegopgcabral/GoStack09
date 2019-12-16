@@ -8,9 +8,11 @@ import { Container, Content, Pagination } from './styles';
 import api from '~/services/api';
 import { formatCurrencyBR } from '~/util/format';
 import NoResult from '~/components/NoResult';
+import Loading from '~/components/Loading';
 
 export default function Plan() {
   const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
@@ -25,12 +27,14 @@ export default function Plan() {
 
   useEffect(() => {
     async function loadPlans() {
+      setLoading(true);
       const response = await api.get('plans', {
         params: {
           page,
         },
       });
       setPlans(response.data);
+      setLoading(false);
     }
     loadPlans();
     handlePagination();
@@ -73,46 +77,52 @@ export default function Plan() {
         </aside>
       </header>
 
-      <Content>
-        {plans.length === 0 ? (
-          <NoResult />
-        ) : (
-          <>
-            <table>
-              <thead>
-                <tr>
-                  <th>TÍTULO</th>
-                  <th align="center">DURAÇÃO</th>
-                  <th align="center">VALOR p/ MÊS</th>
-                </tr>
-              </thead>
-              <tbody>
-                {plans.map(plan => (
-                  <tr key={plan.id}>
-                    <td>{plan.title}</td>
-                    <td align="center">
-                      {plan.duration > 1
-                        ? `${plan.duration} meses`
-                        : `${plan.duration} mês`}
-                    </td>
-                    <td align="center">{formatCurrencyBR(plan.price)}</td>
-                    <td>
-                      <Link to={`/plans/form/${plan.id}`}>editar</Link>
-                      <button
-                        className="btnDelete"
-                        type="button"
-                        onClick={() => handleDelete(plan.id)}
-                      >
-                        apagar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-      </Content>
+      {loading ? (
+        <Loading>Carregando...</Loading>
+      ) : (
+        <>
+          <Content>
+            {plans.length === 0 ? (
+              <NoResult />
+            ) : (
+              <>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>TÍTULO</th>
+                      <th align="center">DURAÇÃO</th>
+                      <th align="center">VALOR p/ MÊS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {plans.map(plan => (
+                      <tr key={plan.id}>
+                        <td>{plan.title}</td>
+                        <td align="center">
+                          {plan.duration > 1
+                            ? `${plan.duration} meses`
+                            : `${plan.duration} mês`}
+                        </td>
+                        <td align="center">{formatCurrencyBR(plan.price)}</td>
+                        <td>
+                          <Link to={`/plans/form/${plan.id}`}>editar</Link>
+                          <button
+                            className="btnDelete"
+                            type="button"
+                            onClick={() => handleDelete(plan.id)}
+                          >
+                            apagar
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
+          </Content>
+        </>
+      )}
 
       {(hasNextPage || page > 1) && (
         <Pagination>
