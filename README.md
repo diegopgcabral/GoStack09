@@ -1,5 +1,5 @@
 <h1 align="center">
-<img src=".github/logo.png">
+<img src="gympoint-frontend/src/assets/logo.png">
 </h1>
 <h3 align="center">
 Back-end(Node.js) / Front-end (ReactJs) / Mobile (React Native) - GoStack Bootcamp <a href="https://rocketseat.com.br" target="__blank">Rocketseat</a>
