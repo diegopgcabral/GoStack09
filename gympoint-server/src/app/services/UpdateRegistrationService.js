@@ -1,4 +1,4 @@
-import { parseISO, isBefore, addMonths } from 'date-fns';
+import { parseISO, addMonths } from 'date-fns';
 
 import Student from '../models/Student';
 import Plan from '../models/Plan';
@@ -25,11 +25,11 @@ class UpdateRegistrationService {
       }
     }
 
-    if (start_date && start_date !== registration.start_date) {
-      if (isBefore(parseISO(start_date), new Date())) {
-        throw new Error('Não é permitido usar datas passadas');
-      }
-    }
+    // if (start_date && start_date !== registration.start_date) {
+    //   if (isBefore(parseISO(start_date), new Date())) {
+    //     throw new Error('Não é permitido usar datas passadas');
+    //   }
+    // }
 
     const plan = await Plan.findByPk(plan_id);
     const endDate = addMonths(parseISO(start_date), plan.duration);
