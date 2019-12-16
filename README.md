@@ -97,4 +97,4 @@ react-native run-android
 
 ## Login App Mobile
 
-**_Você precisa criar um novo aluno no projeto Gympoint WEB e logar com o ID que você recebeu pelo email no momento da efetivação da matrícula_**
+**_Você precisa criar um novo aluno no projeto Gympoint WEB, ativa uma matrícula e logar com o ID que você recebeu pelo email no momento da efetivação da matrícula_**
