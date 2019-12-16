@@ -25,7 +25,6 @@ import api from '~/services/api';
 function HelpOrderList({ navigation, isFocused }) {
   const student = useSelector(state => state.auth.student);
   const [helpOrders, setHelpOrder] = useState([]);
-  console.tron.log(navigation);
 
   async function loadHelpOrders() {
     const response = await api.get(`/students/${student.id}/help-orders`);
