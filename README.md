@@ -4,9 +4,9 @@
 <h3 align="center">
   Desafio Final para a certificação do bootcamp da RocketSeat
   </h3>
-<h3 align="center">
+<h2 align="center">
 Back-end(Node.js) / Front-end (ReactJs) / Mobile (React Native) - GoStack Bootcamp <a href="https://rocketseat.com.br" target="__blank">Rocketseat</a>
-</h3>
+</h2>
 
 ## :gear: Back-end
 
