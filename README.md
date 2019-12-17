@@ -38,11 +38,12 @@ gympoint
 # criar estrutura do banco de dados Postgres
 yarn sequelize db:migrate
 
-# povoar o banco de dados
+# popular o banco de dados
 yarn sequelize db:seed:all
 
 # iniciar o servidor da aplicação
 yarn dev
+ou
 yarn dev:debug
 
 # iniciar a fila de jobs  (outro terminal)
