@@ -9,7 +9,7 @@ Back-end(Node.js) / Front-end (ReactJs) / Mobile (React Native) - GoStack Bootca
 </h5>
 
 ## Sobre o desafio
-A aplicação é um gerenciador de academia, o <strong>Gympoint</strong>. O Gympoint WEB será toda voltada para o controle da academia, os alunos não terão acesso ao Gympoint WEB. Os alunos terão acesso ao MOBILE, onde deverão logar com o seu ID de cadastro para logar no APP. No APP os alunos poderão realizar o seu check-in e solicitar algum tipo de auxílio para a academia Gympoint.
+A aplicação é um gerenciador de academia, o <strong>Gympoint</strong>. O Gympoint WEB será toda voltada para o controle da academia, os alunos não terão acesso ao Gympoint WEB. Os alunos terão acesso ao MOBILE, onde deverão logar com o seu ID de cadastro no APP. No APP os alunos poderão realizar o seu check-in e solicitar algum tipo de auxílio para a academia Gympoint.
 
 ## :gear: Back-end
 
