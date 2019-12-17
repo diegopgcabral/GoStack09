@@ -1,9 +1,15 @@
 <h1 align="center">
-<img src="https://raw.githubusercontent.com/davidfaria/gympoint-backend/master/.github/logo.png">
+<img src="gympoint-frontend/src/assets/logo.png">
 </h1>
 <h3 align="center">
-Back-end Node.js - GoStack Bootcamp <a href="https://rocketseat.com.br" target="__blank">Rocketseat</a>
-</h3>
+  Desafio Final para a certificação do bootcamp da RocketSeat
+  </h3>
+<h5 align="center">
+Back-end(Node.js) / Front-end (ReactJs) / Mobile (React Native) - GoStack Bootcamp <a href="https://rocketseat.com.br" target="__blank">Rocketseat</a>
+</h5>
+
+## Sobre o desafio
+A aplicação é um gerenciador de academia, o <strong>Gympoint</strong>. O Gympoint WEB será toda voltada para o controle da academia e os alunos só terão acesso ao MOBILE para realizar o seu check-in e solicitar algum tipo de auxílio para a Gympoint.
 
 ## :gear: Back-end
 
@@ -91,4 +97,4 @@ react-native run-android
 
 ## Login App Mobile
 
-**_Você precisa criar um novo aluno no projeto Gympoint WEB e logar com o ID que você recebeu pelo email no momento da efetivação da matrícula_**
+**_Você precisa criar um novo aluno no projeto Gympoint WEB, ativar uma matrícula e logar com o ID que você recebeu pelo email no momento da efetivação da matrícula_**
