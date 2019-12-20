@@ -45,18 +45,31 @@ export const Container = styled.div`
       color: #999999;
     }
 
-    button {
-      height: 45px;
-      margin: 20px 15px;
-      border: none;
-      border-radius: 4px;
-      background-color: #ee4d64;
-      font-size: 16px;
-      font-weight: bold;
-      color: #ffffff;
+    footer {
+      display: flex;
+      justify-content: space-between;
 
-      &:hover {
-        background: ${darken(0.03, '#ee4d64')};
+      button {
+        flex-grow: 1;
+        height: 45px;
+        margin: 20px 15px;
+        border: none;
+        border-radius: 4px;
+        background-color: #ee4d64;
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffffff;
+
+        &:hover {
+          background: ${darken(0.03, '#ee4d64')};
+        }
+
+        &.return {
+          background-color: #cccccc;
+          &:hover {
+            background: ${darken(0.03, '#cccccc')};
+          }
+        }
       }
     }
   }

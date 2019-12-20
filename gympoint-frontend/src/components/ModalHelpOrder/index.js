@@ -35,6 +35,10 @@ export default function ModalHelpOrder({ payload }) {
     }
   }
 
+  function handleReturn() {
+    window.location.reload();
+  }
+
   return (
     <Container>
       <Form>
@@ -47,9 +51,14 @@ export default function ModalHelpOrder({ payload }) {
           onChange={e => setAnswerHelpOrder(e.target.value)}
           value={answerHelpOrder}
         />
-        <button type="button" onClick={() => handleAnswerHelpOrder()}>
-          {loading ? 'Respondendo...' : 'Responder aluno'}
-        </button>
+        <footer>
+          <button className="return" type="button" onClick={handleReturn}>
+            Voltar
+          </button>
+          <button type="button" onClick={() => handleAnswerHelpOrder()}>
+            {loading ? 'Respondendo...' : 'Responder aluno'}
+          </button>
+        </footer>
       </Form>
     </Container>
   );

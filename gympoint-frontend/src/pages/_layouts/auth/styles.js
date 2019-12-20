@@ -30,7 +30,7 @@ export const Content = styled.div`
     flex-direction: column;
     margin-top: 30px;
 
-    text {
+    label {
       font-weight: bold;
       font-size: 14px;
       line-height: 16px;

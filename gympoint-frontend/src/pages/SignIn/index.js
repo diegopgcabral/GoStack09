@@ -27,15 +27,17 @@ export default function SignIn() {
       <img src={logo} alt="GymPoint" />
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <text>SEU E-MAIL</text>
+        <label htmlFor="email">SEU E-MAIL</label>
         <Input
+          id="email"
           name="email"
           type="email"
           autoComplete="off"
           placeholder="exemplo@email.com"
         />
-        <text>SUA SENHA</text>
+        <label htmlFor="password">SUA SENHA</label>
         <Input
+          id="password"
           name="password"
           type="password"
           autoComplete="off"
